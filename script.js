@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let firstColor = Math.floor(Math.random() * 360);
+  let firstColor;
   let secondColor;
 
   function loadColor() {
+    firstColor = Math.floor(Math.random() * 360);
     setSecondColor();
     document.getElementById(
       "first-color"
@@ -19,5 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  loadColor();
+  document.addEventListener("keydown", (event) => {
+    if (event.code === "Space") {
+      loadColor();
+    }
+  });
 });
