@@ -3,20 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Palette picker</title>
+    <title>Ändra titeln och kom på ett nytt namn</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="./script.js" defer></script>
   </head>
   <body>
     <main>
-      <section>
-        <h1>Primary color</h1>
-        <div id="first-color"></div>
-      </section>
-      <section>
-        <h1>Secondary color</h1>
-        <div id="second-color"></div>
+      <h1>
+        <span class="header-letters">Aa</span>
+        <span id="contrast-ratio"></span>
+        <span id="contrast-check"></span>
+      </h1>
+      <div class="buttons">
+        <div class="button-group">
+          <button class="button">Random</button>
+          <button class="button">Reverse</button>
+        </div>
+      </div>
+      <section class="colors">
+        <div class="colors-text">
+          <div class="colors-input">
+            <h2><label for="text-value">Text</label></h2>
+            <input type="text" name="text-value" id="text-value" />
+          </div>
+          <div class="colors-range">
+            <label for="text-hue">Hue<span id="text-hue-value"></span></label>
+            <input type="range" name="hue" id="text-hue" />
+          </div>
+          <div class="colors-range">
+            <label for="text-saturation"
+              >Saturation<span id="text-saturation-value"></span
+            ></label>
+            <input type="range" name="saturation" id="text-saturation" />
+          </div>
+          <div class="colors-range">
+            <label for="text-lightness"
+              >Lightness<span id="text-lightness-value"></span
+            ></label>
+            <input type="range" name="lightness" id="text-lightness" />
+          </div>
+        </div>
+
+        <div class="colors-background">
+          <div class="colors-input">
+            <h2><label for="background-value">Background</label></h2>
+            <input type="text" name="background-value" id="background-value" />
+          </div>
+          <div class="colors-range">
+            <label for="background-hue"
+              >Hue<span id="hue-value-background"></span
+            ></label>
+            <input type="range" name="hue" id="background-hue" />
+          </div>
+          <div class="colors-range">
+            <label for="backgroud-saturation"
+              >Saturation<span id="saturation-value-background"></span
+            ></label>
+            <input type="range" name="saturation" id="backgroud-saturation" />
+          </div>
+          <div class="colors-range">
+            <label for="background-lightness"
+              >Lightness<span id="lightness-value-background"></span
+            ></label>
+            <input type="range" name="lightness" id="background-lightness" />
+          </div>
+        </div>
       </section>
     </main>
-    <script src="./script.js"></script>
   </body>
 </html>
