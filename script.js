@@ -54,6 +54,12 @@ rndButton.addEventListener("click", () => {
   generateRandomColors();
 });
 
+const revButton = document.querySelector("#button-reverse");
+
+revButton.addEventListener("click", () => {
+  switchColors();
+});
+
 function generateRandomColors() {
   textHue.value = generateHue();
   textSaturation.value = generateSaturationOrLightness();
@@ -62,12 +68,6 @@ function generateRandomColors() {
   bgSaturation.value = generateSaturationOrLightness();
   bgLightness.value = generateSaturationOrLightness();
 
-  textHueValue.textContent = textHue.value;
-  textSaturationValue.textContent = textSaturation.value;
-  textLightnessValue.textContent = textLightness.value;
-  bgHueValue.textContent = bgHue.value;
-  bgSaturationValue.textContent = bgSaturation.value;
-  bgLightnessValue.textContent = bgLightness.value;
   updateBackgroundColor();
   updateTextColor();
 }
@@ -79,6 +79,20 @@ function generateHue() {
 function generateSaturationOrLightness() {
   const precision = 100;
   return Math.floor(Math.random() * precision) / precision;
+}
+
+function switchColors() {
+  const tempHue = textHue.value;
+  const tempSat = textSaturation.value;
+  const tempLight = textLightness.value;
+  textHue.value = bgHue.value;
+  textSaturation.value = bgSaturation.value;
+  textLightness.value = bgLightness.value;
+  bgHue.value = tempHue;
+  bgSaturation.value = tempSat;
+  bgLightness.value = tempLight;
+  updateBackgroundColor();
+  updateTextColor();
 }
 
 function hsltoHex(h, s, l) {
@@ -103,6 +117,10 @@ function updateBackgroundColor() {
   const l = bgLightness.value * 100;
   const hexColor = hsltoHex(h, s, l);
 
+  bgHueValue.textContent = bgHue.value;
+  bgSaturationValue.textContent = bgSaturation.value;
+  bgLightnessValue.textContent = bgLightness.value;
+
   let backgroundColorDisplay = document.querySelector(".background");
   backgroundColorDisplay.style.backgroundColor = hexColor;
   bgHex.value = hexColor;
@@ -111,8 +129,12 @@ function updateBackgroundColor() {
 function updateTextColor() {
   const h = textHue.value;
   const s = textSaturation.value * 100;
-  const l = textSaturation.value * 100;
+  const l = textLightness.value * 100;
   const hexColor = hsltoHex(h, s, l);
+
+  textHueValue.textContent = textHue.value;
+  textSaturationValue.textContent = textSaturation.value;
+  textLightnessValue.textContent = textLightness.value;
 
   let textColorDisplay = document.querySelectorAll(".text");
   textColorDisplay.forEach((element) => {
