@@ -1,28 +1,132 @@
-document.addEventListener("DOMContentLoaded", function () {
-  let firstColor;
-  let secondColor;
+const textHue = document.querySelector("#text-hue");
+const textHueValue = document.querySelector("#text-hue-value");
 
-  function loadColor() {
-    firstColor = Math.floor(Math.random() * 360);
-    setSecondColor();
-    document.getElementById(
-      "first-color"
-    ).style.backgroundColor = `hsla(${firstColor}, 100%, 50%, 1)`;
-    document.getElementById(
-      "second-color"
-    ).style.backgroundColor = `hsla(${secondColor}, 100%, 50%, 1)`;
-  }
+const textSaturation = document.querySelector("#text-saturation");
+const textSaturationValue = document.querySelector("#text-saturation-value");
 
-  function setSecondColor() {
-    secondColor = firstColor + 180;
-    if (secondColor >= 360) {
-      secondColor -= 360;
-    }
-  }
+const textLightness = document.querySelector("#text-lightness");
+const textLightnessValue = document.querySelector("#text-lightness-value");
 
-  document.addEventListener("keydown", (event) => {
-    if (event.code === "Space") {
-      loadColor();
-    }
-  });
+const bgHue = document.querySelector("#background-hue");
+const bgHueValue = document.querySelector("#background-hue-value");
+
+const bgSaturation = document.querySelector("#background-saturation");
+const bgSaturationValue = document.querySelector(
+  "#background-saturation-value"
+);
+
+const bgLightness = document.querySelector("#background-lightness");
+const bgLightnessValue = document.querySelector("#background-lightness-value");
+
+textHue.addEventListener("input", () => {
+  textHueValue.textContent = textHue.value;
+  updateTextColor();
 });
+
+textSaturation.addEventListener("input", () => {
+  textSaturationValue.textContent = textSaturation.value;
+  updateTextColor();
+});
+
+textLightness.addEventListener("input", () => {
+  textLightnessValue.textContent = textLightness.value;
+  updateTextColor();
+});
+
+bgHue.addEventListener("input", () => {
+  bgHueValue.textContent = bgHue.value;
+  updateBackgroundColor();
+});
+
+bgSaturation.addEventListener("input", () => {
+  bgSaturationValue.textContent = bgSaturation.value;
+  updateBackgroundColor();
+});
+
+bgLightness.addEventListener("input", () => {
+  bgLightnessValue.textContent = bgLightness.value;
+  updateBackgroundColor();
+});
+
+const rndButton = document.querySelector("#button-random");
+
+rndButton.addEventListener("click", () => {
+  generateRandomColors();
+});
+
+function generateRandomColors() {
+  textHue.value = generateHue();
+  textSaturation.value = generateSaturationOrLightness();
+  textLightness.value = generateSaturationOrLightness();
+  bgHue.value = generateHue();
+  bgSaturation.value = generateSaturationOrLightness();
+  bgLightness.value = generateSaturationOrLightness();
+
+  textHueValue.textContent = textHue.value;
+  textSaturationValue.textContent = textSaturation.value;
+  textLightnessValue.textContent = textLightness.value;
+  bgHueValue.textContent = bgHue.value;
+  bgSaturationValue.textContent = bgSaturation.value;
+  bgLightnessValue.textContent = bgLightness.value;
+  updateBackgroundColor();
+  updateTextColor();
+}
+
+function generateHue() {
+  return Math.floor(Math.random() * 360);
+}
+
+function generateSaturationOrLightness() {
+  const precision = 100;
+  return Math.floor(Math.random() * precision) / precision;
+}
+
+function hsltoHex(h, s, l) {
+  l /= 100;
+  const a = (s * Math.min(l, 1 - l)) / 100;
+  const f = (n) => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color)
+      .toString(16)
+      .padStart(2, "0");
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+const bgHex = document.querySelector("#background-value");
+const textHex = document.querySelector("#text-value");
+
+function updateBackgroundColor() {
+  const h = bgHue.value;
+  const s = bgSaturation.value * 100;
+  const l = bgLightness.value * 100;
+  const hexColor = hsltoHex(h, s, l);
+
+  let backgroundColorDisplay = document.querySelector(".background");
+  backgroundColorDisplay.style.backgroundColor = hexColor;
+  bgHex.value = hexColor;
+}
+
+function updateTextColor() {
+  const h = textHue.value;
+  const s = textSaturation.value * 100;
+  const l = textSaturation.value * 100;
+  const hexColor = hsltoHex(h, s, l);
+
+  let textColorDisplay = document.querySelectorAll(".text");
+  textColorDisplay.forEach((element) => {
+    element.style.color = hexColor;
+  });
+  textHex.value = hexColor;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  start();
+});
+
+function start() {
+  generateRandomColors();
+  updateBackgroundColor();
+  updateTextColor();
+}

@@ -7,65 +7,120 @@
     <link rel="stylesheet" href="style.css" />
     <script src="./script.js" defer></script>
   </head>
-  <body>
+  <body class="background">
     <main>
       <h1>
-        <span class="header-letters">Aa</span>
-        <span id="contrast-ratio"></span>
-        <span id="contrast-check"></span>
+        <span class="header-letters text">Aa</span>
+        <span id="contrast-ratio" class="text"></span>
+        <span id="contrast-check" class="text"></span>
       </h1>
       <div class="buttons">
         <div class="button-group">
-          <button class="button">Random</button>
-          <button class="button">Reverse</button>
+          <button class="button" id="button-random">Random</button>
+          <button class="button" id="button-reverse">Reverse</button>
         </div>
       </div>
       <section class="colors">
         <div class="colors-text">
           <div class="colors-input">
-            <h2><label for="text-value">Text</label></h2>
-            <input type="text" name="text-value" id="text-value" />
+            <h2 class="text"><label for="text-value">Text</label></h2>
+            <input type="text" name="text-value" id="text-value" class="text" />
           </div>
           <div class="colors-range">
-            <label for="text-hue">Hue<span id="text-hue-value"></span></label>
-            <input type="range" name="hue" id="text-hue" />
+            <label for="text-hue" class="text"
+              >Hue <span id="text-hue-value">0</span>°</label
+            >
+            <input
+              type="range"
+              name="hue"
+              id="text-hue"
+              class="text"
+              min="0"
+              max="359"
+            />
           </div>
           <div class="colors-range">
-            <label for="text-saturation"
-              >Saturation<span id="text-saturation-value"></span
-            ></label>
-            <input type="range" name="saturation" id="text-saturation" />
+            <label for="text-saturation" class="text"
+              >Saturation <span id="text-saturation-value">0</span></label
+            >
+            <input
+              type="range"
+              name="saturation"
+              id="text-saturation"
+              class="text"
+              min="0"
+              max="1"
+              step="0.01"
+            />
           </div>
           <div class="colors-range">
-            <label for="text-lightness"
-              >Lightness<span id="text-lightness-value"></span
-            ></label>
-            <input type="range" name="lightness" id="text-lightness" />
+            <label for="text-lightness" class="text"
+              >Lightness <span id="text-lightness-value">0</span></label
+            >
+            <input
+              type="range"
+              name="lightness"
+              id="text-lightness"
+              class="text"
+              min="0"
+              max="1"
+              step="0.01"
+            />
           </div>
         </div>
 
         <div class="colors-background">
           <div class="colors-input">
-            <h2><label for="background-value">Background</label></h2>
-            <input type="text" name="background-value" id="background-value" />
+            <h2>
+              <label for="background-value" class="text">Background</label>
+            </h2>
+            <input
+              type="text"
+              name="background-value"
+              id="background-value"
+              class="text"
+            />
           </div>
           <div class="colors-range">
-            <label for="background-hue"
-              >Hue<span id="hue-value-background"></span
-            ></label>
-            <input type="range" name="hue" id="background-hue" />
+            <label for="background-hue" class="text"
+              >Hue <span id="background-hue-value">0</span>°</label
+            >
+            <input
+              type="range"
+              name="hue"
+              id="background-hue"
+              class="text"
+              min="0"
+              max="359"
+            />
           </div>
           <div class="colors-range">
-            <label for="backgroud-saturation"
-              >Saturation<span id="saturation-value-background"></span
-            ></label>
-            <input type="range" name="saturation" id="backgroud-saturation" />
+            <label for="background-saturation" class="text"
+              >Saturation <span id="background-saturation-value">0</span></label
+            >
+            <input
+              type="range"
+              name="saturation"
+              id="background-saturation"
+              class="text"
+              min="0"
+              max="1"
+              step="0.01"
+            />
           </div>
           <div class="colors-range">
-            <label for="background-lightness"
-              >Lightness<span id="lightness-value-background"></span
-            ></label>
-            <input type="range" name="lightness" id="background-lightness" />
+            <label for="background-lightness" class="text"
+              >Lightness <span id="background-lightness-value">0</span></label
+            >
+            <input
+              type="range"
+              name="lightness"
+              id="background-lightness"
+              class="text"
+              min="0"
+              max="1"
+              step="0.01"
+            />
           </div>
         </div>
       </section>
