@@ -21,31 +21,37 @@ const bgLightnessValue = document.querySelector("#background-lightness-value");
 textHue.addEventListener("input", () => {
   textHueValue.textContent = textHue.value;
   updateTextColor();
+  debounceUpdateContrastRatio();
 });
 
 textSaturation.addEventListener("input", () => {
   textSaturationValue.textContent = textSaturation.value;
   updateTextColor();
+  debounceUpdateContrastRatio();
 });
 
 textLightness.addEventListener("input", () => {
   textLightnessValue.textContent = textLightness.value;
   updateTextColor();
+  debounceUpdateContrastRatio();
 });
 
 bgHue.addEventListener("input", () => {
   bgHueValue.textContent = bgHue.value;
   updateBackgroundColor();
+  debounceUpdateContrastRatio();
 });
 
 bgSaturation.addEventListener("input", () => {
   bgSaturationValue.textContent = bgSaturation.value;
   updateBackgroundColor();
+  debounceUpdateContrastRatio();
 });
 
 bgLightness.addEventListener("input", () => {
   bgLightnessValue.textContent = bgLightness.value;
   updateBackgroundColor();
+  debounceUpdateContrastRatio();
 });
 
 const rndButton = document.querySelector("#button-random");
@@ -70,6 +76,7 @@ function generateRandomColors() {
 
   updateBackgroundColor();
   updateTextColor();
+  debounceUpdateContrastRatio();
 }
 
 function generateHue() {
@@ -77,7 +84,7 @@ function generateHue() {
 }
 
 function generateSaturationOrLightness() {
-  const precision = 100;
+  const precision = 100; //Get values with two decimal precision
   return Math.floor(Math.random() * precision) / precision;
 }
 
@@ -95,7 +102,7 @@ function switchColors() {
   updateTextColor();
 }
 
-function hsltoHex(h, s, l) {
+function hslToHex(h, s, l) {
   l /= 100;
   const a = (s * Math.min(l, 1 - l)) / 100;
   const f = (n) => {
@@ -115,7 +122,7 @@ function updateBackgroundColor() {
   const h = bgHue.value;
   const s = bgSaturation.value * 100;
   const l = bgLightness.value * 100;
-  const hexColor = hsltoHex(h, s, l);
+  const hexColor = hslToHex(h, s, l);
 
   bgHueValue.textContent = bgHue.value;
   bgSaturationValue.textContent = bgSaturation.value;
@@ -130,7 +137,7 @@ function updateTextColor() {
   const h = textHue.value;
   const s = textSaturation.value * 100;
   const l = textLightness.value * 100;
-  const hexColor = hsltoHex(h, s, l);
+  const hexColor = hslToHex(h, s, l);
 
   textHueValue.textContent = textHue.value;
   textSaturationValue.textContent = textSaturation.value;
@@ -143,6 +150,54 @@ function updateTextColor() {
   textHex.value = hexColor;
 }
 
+async function fetchContrastRatio(textColor, bgColor) {
+  const response = await fetch(
+    `https://webaim.org/resources/contrastchecker/?fcolor=${textColor}&bcolor=${bgColor}&api`
+  );
+  const data = await response.json();
+  console.log(++noOfCalls);
+  return data;
+}
+
+let noOfCalls = 0;
+
+async function updateContrastRatio() {
+  const textHexColor = hslToHex(
+    textHue.value,
+    textSaturation.value * 100,
+    textLightness.value * 100
+  ).substring(1); //Substring för att ta bort '#'
+  const bgHexColor = hslToHex(
+    bgHue.value,
+    bgSaturation.value * 100,
+    bgLightness.value * 100
+  ).substring(1);
+
+  const data = await fetchContrastRatio(textHexColor, bgHexColor);
+  const contrastRatio = data.ratio;
+  const contrastRatioDisplay = document.querySelector("#contrast-ratio");
+  contrastRatioDisplay.textContent = `${contrastRatio}`;
+  const contrastCheckDisplay = document.querySelector("#contrast-check");
+  contrastCheckDisplay.textContent = displayContrastCheck(contrastRatio);
+}
+
+function displayContrastCheck(contrastRatio) {
+  if (contrastRatio < 3) return "Fail";
+  if (contrastRatio >= 3 && contrastRatio < 4.5) return "WCAG AA";
+  if (contrastRatio >= 4.5 && contrastRatio < 7) return "Large Text";
+  if (contrastRatio >= 7) return "WCAG AAA";
+}
+
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
+const debounceUpdateContrastRatio = debounce(updateContrastRatio, 10);
+
 document.addEventListener("DOMContentLoaded", () => {
   start();
 });
@@ -151,4 +206,5 @@ function start() {
   generateRandomColors();
   updateBackgroundColor();
   updateTextColor();
+  debounceUpdateContrastRatio();
 }
