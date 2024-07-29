@@ -20,38 +20,32 @@ const bgLightnessValue = document.querySelector("#background-lightness-value");
 
 textHue.addEventListener("input", () => {
   textHueValue.textContent = textHue.value;
-  updateTextColor();
-  debounceUpdateContrastRatio();
+  debounceUpdateColorsAndContrast();
 });
 
 textSaturation.addEventListener("input", () => {
   textSaturationValue.textContent = textSaturation.value;
-  updateTextColor();
-  debounceUpdateContrastRatio();
+  debounceUpdateColorsAndContrast();
 });
 
 textLightness.addEventListener("input", () => {
   textLightnessValue.textContent = textLightness.value;
-  updateTextColor();
-  debounceUpdateContrastRatio();
+  debounceUpdateColorsAndContrast();
 });
 
 bgHue.addEventListener("input", () => {
   bgHueValue.textContent = bgHue.value;
-  updateBackgroundColor();
-  debounceUpdateContrastRatio();
+  debounceUpdateColorsAndContrast();
 });
 
 bgSaturation.addEventListener("input", () => {
   bgSaturationValue.textContent = bgSaturation.value;
-  updateBackgroundColor();
-  debounceUpdateContrastRatio();
+  debounceUpdateColorsAndContrast();
 });
 
 bgLightness.addEventListener("input", () => {
   bgLightnessValue.textContent = bgLightness.value;
-  updateBackgroundColor();
-  debounceUpdateContrastRatio();
+  debounceUpdateColorsAndContrast();
 });
 
 const rndButton = document.querySelector("#button-random");
@@ -75,8 +69,7 @@ function generateRandomColors() {
   bgLightness.value = generateSaturationOrLightness();
 
   updateBackgroundColor();
-  updateTextColor();
-  debounceUpdateContrastRatio();
+  debounceUpdateColorsAndContrast();
 }
 
 function generateHue() {
@@ -99,7 +92,7 @@ function switchColors() {
   bgSaturation.value = tempSat;
   bgLightness.value = tempLight;
   updateBackgroundColor();
-  updateTextColor();
+  debounceUpdateColorsAndContrast();
 }
 
 function hslToHex(h, s, l) {
@@ -155,11 +148,8 @@ async function fetchContrastRatio(textColor, bgColor) {
     `https://webaim.org/resources/contrastchecker/?fcolor=${textColor}&bcolor=${bgColor}&api`
   );
   const data = await response.json();
-  console.log(++noOfCalls);
   return data;
 }
-
-let noOfCalls = 0;
 
 async function updateContrastRatio() {
   const textHexColor = hslToHex(
@@ -178,7 +168,14 @@ async function updateContrastRatio() {
   const contrastRatioDisplay = document.querySelector("#contrast-ratio");
   contrastRatioDisplay.textContent = `${contrastRatio}`;
   const contrastCheckDisplay = document.querySelector("#contrast-check");
-  contrastCheckDisplay.textContent = displayContrastCheck(contrastRatio);
+  const contrastResult = displayContrastCheck(contrastRatio);
+
+  if (contrastResult === "Fail") {
+    adjustTextColor();
+  } else {
+    updateTextColor();
+  }
+  contrastCheckDisplay.textContent = contrastResult;
 }
 
 function displayContrastCheck(contrastRatio) {
@@ -186,6 +183,18 @@ function displayContrastCheck(contrastRatio) {
   if (contrastRatio >= 3 && contrastRatio < 4.5) return "WCAG AA";
   if (contrastRatio >= 4.5 && contrastRatio < 7) return "Large Text";
   if (contrastRatio >= 7) return "WCAG AAA";
+}
+
+function adjustTextColor() {
+  const colorsSection = document.querySelector(".colors");
+  const backgroundLightness = bgLightness.value;
+
+  const textColor = backgroundLightness < 0.5 ? "#FFF" : "#000";
+  colorsSection.style.color = textColor;
+  const textElements = colorsSection.querySelectorAll(".text");
+  textElements.forEach((element) => {
+    element.style.color = textColor;
+  });
 }
 
 function debounce(func, wait) {
@@ -196,7 +205,10 @@ function debounce(func, wait) {
   };
 }
 
-const debounceUpdateContrastRatio = debounce(updateContrastRatio, 10);
+const debounceUpdateColorsAndContrast = debounce(async () => {
+  updateBackgroundColor();
+  await updateContrastRatio();
+}, 12); // antalet millisekunder innan metoden kan kallas på igen
 
 document.addEventListener("DOMContentLoaded", () => {
   start();
