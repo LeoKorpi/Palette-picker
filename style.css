@@ -1,11 +1,12 @@
 * {
   margin: 0;
   padding: 0;
+  font-size: 12px;
 }
 
 body {
-  height: 100vh;
-  width: 100%;
+  min-height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
 }
@@ -15,20 +16,166 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.header-letters,
+.contrast-ratio {
+  font-size: 5rem;
+}
+
+.contrast-ratio {
+  font-weight: 400;
+}
+
+.contrast-check {
+  font-size: 3rem;
+}
+
+.colors-header,
+.input-field {
+  font-size: 2.5rem;
 }
 
 .colors {
   display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 80%;
+  gap: 20px;
+}
+
+.colors-text,
+.colors-background {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.colors-input {
+  display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 2px;
+  height: 2.5rem;
+  margin-bottom: 1rem;
 }
 
-section {
-  margin: 40px;
+.input-field {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  text-align: right;
+  width: 40%;
+  border-bottom: 2px solid currentColor;
+  box-sizing: border-box;
+  transition: border-bottom-width 120ms ease-in-out;
 }
 
-#first-color,
-#second-color {
-  border: 1px solid black;
-  width: 150px;
-  height: 150px;
+.input-field:focus {
+  border-bottom: 3.5px solid currentColor;
+}
+
+.hsl-label,
+.hsl-label span {
+  font-size: 1.5rem;
+}
+
+.slider {
+  appearance: none;
+  width: 100%;
+  margin: 10px 0;
+  background-color: transparent;
+}
+
+.slider::-webkit-slider-runnable-track {
+  cursor: pointer;
+  width: 100%;
+  height: 2px;
+  border-radius: 0.5rem;
+  border: 2px solid hsl(0, 0%, 0%, 0.3);
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  background-color: var(--thumb-color, white);
+  border-radius: 50%;
+  margin-top: -9px; /* För att centrera bollen på linjen*/
+}
+
+.slider::-webkit-slider-thumb:active {
+  height: 21px;
+  width: 21px;
+  margin-top: -11px; /* För att centrera bollen på linjen*/
+}
+
+.slider:focus {
+  outline: none;
+}
+
+.buttons {
+  width: 80%;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.button {
+  appearance: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background-color: currentColor;
+  color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 600;
+  min-width: 90px;
+}
+
+@media only screen and (min-width: 1024px) {
+  .header-letters {
+    font-size: 12rem;
+  }
+
+  .contrast-ratio {
+    font-size: 8rem;
+  }
+
+  .contrast-check {
+    font-size: 5rem;
+  }
+
+  .header {
+    gap: 1.5rem;
+  }
+
+  .colors {
+    flex-direction: row;
+  }
+
+  .button-group {
+    justify-content: flex-start;
+    gap: 40px;
+  }
+
+  .input-field {
+    width: 30%;
+  }
 }

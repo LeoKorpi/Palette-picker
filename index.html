@@ -10,58 +10,62 @@
   <body class="background">
     <main>
       <h1>
-        <span class="header-letters text">Aa</span>
-        <span id="contrast-ratio" class="text"></span>
-        <span id="contrast-check" class="text"></span>
-      </h1>
-      <div class="buttons">
-        <div class="button-group">
-          <button class="button" id="button-random">Random</button>
-          <button class="button" id="button-reverse">Reverse</button>
+        <div class="header">
+          <span class="header-letters text">Aa</span>
+          <span id="contrast-ratio" class="contrast-ratio text"></span>
+          <span id="contrast-check" class="contrast-check text"></span>
         </div>
-      </div>
+      </h1>
+
       <section class="colors">
         <div class="colors-text">
           <div class="colors-input">
-            <h2 class="text"><label for="text-value">Text</label></h2>
-            <input type="text" name="text-value" id="text-value" class="text" />
+            <h2 class="text">
+              <label class="colors-header" for="text-value">Text</label>
+            </h2>
+            <input
+              type="text"
+              name="text-value"
+              id="text-value"
+              class="input-field text"
+            />
           </div>
           <div class="colors-range">
-            <label for="text-hue" class="text"
+            <label for="text-hue" class="hsl-label text"
               >Hue <span id="text-hue-value">0</span>°</label
             >
             <input
               type="range"
               name="hue"
               id="text-hue"
-              class="text"
+              class="slider text"
               min="0"
               max="359"
             />
           </div>
           <div class="colors-range">
-            <label for="text-saturation" class="text"
+            <label for="text-saturation" class="hsl-label text"
               >Saturation <span id="text-saturation-value">0</span></label
             >
             <input
               type="range"
               name="saturation"
               id="text-saturation"
-              class="text"
+              class="slider text"
               min="0"
               max="1"
               step="0.01"
             />
           </div>
           <div class="colors-range">
-            <label for="text-lightness" class="text"
+            <label for="text-lightness" class="hsl-label text"
               >Lightness <span id="text-lightness-value">0</span></label
             >
             <input
               type="range"
               name="lightness"
               id="text-lightness"
-              class="text"
+              class="slider text"
               min="0"
               max="1"
               step="0.01"
@@ -71,52 +75,54 @@
 
         <div class="colors-background">
           <div class="colors-input">
-            <h2>
-              <label for="background-value" class="text">Background</label>
+            <h2 class="text">
+              <label class="colors-header" for="background-value" class="text"
+                >Background</label
+              >
             </h2>
             <input
               type="text"
               name="background-value"
               id="background-value"
-              class="text"
+              class="input-field text"
             />
           </div>
           <div class="colors-range">
-            <label for="background-hue" class="text"
+            <label for="background-hue" class="hsl-label text"
               >Hue <span id="background-hue-value">0</span>°</label
             >
             <input
               type="range"
               name="hue"
               id="background-hue"
-              class="text"
+              class="slider text"
               min="0"
               max="359"
             />
           </div>
           <div class="colors-range">
-            <label for="background-saturation" class="text"
+            <label for="background-saturation" class="hsl-label text"
               >Saturation <span id="background-saturation-value">0</span></label
             >
             <input
               type="range"
               name="saturation"
               id="background-saturation"
-              class="text"
+              class="slider text"
               min="0"
               max="1"
               step="0.01"
             />
           </div>
           <div class="colors-range">
-            <label for="background-lightness" class="text"
+            <label for="background-lightness" class="hsl-label text"
               >Lightness <span id="background-lightness-value">0</span></label
             >
             <input
               type="range"
               name="lightness"
               id="background-lightness"
-              class="text"
+              class="slider text"
               min="0"
               max="1"
               step="0.01"
@@ -124,6 +130,12 @@
           </div>
         </div>
       </section>
+      <div class="buttons">
+        <div class="button-group">
+          <button class="button text" id="button-random">Random</button>
+          <button class="button text" id="button-reverse">Reverse</button>
+        </div>
+      </div>
     </main>
   </body>
 </html>

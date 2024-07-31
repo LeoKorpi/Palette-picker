@@ -77,7 +77,7 @@ function generateHue() {
 }
 
 function generateSaturationOrLightness() {
-  const precision = 100; //Get values with two decimal precision
+  const precision = 100; //Få värden med två decimalers precision
   return Math.floor(Math.random() * precision) / precision;
 }
 
@@ -91,8 +91,9 @@ function switchColors() {
   bgHue.value = tempHue;
   bgSaturation.value = tempSat;
   bgLightness.value = tempLight;
-  updateBackgroundColor();
   debounceUpdateColorsAndContrast();
+
+  //Det är något konstigt här, funkar endast när contrast-ration är över 3 (varför?)
 }
 
 function hslToHex(h, s, l) {
@@ -141,6 +142,24 @@ function updateTextColor() {
     element.style.color = hexColor;
   });
   textHex.value = hexColor;
+
+  updateButtonStyles(hexColor, bgHex.value);
+  updateSlideThumbsColor(hexColor);
+}
+
+function updateButtonStyles(textColor, bgColor) {
+  const buttons = document.querySelectorAll(".button.text");
+  buttons.forEach((button) => {
+    button.style.backgroundColor = textColor;
+    button.style.color = bgColor;
+  });
+}
+
+function updateSlideThumbsColor(thumbColor) {
+  const sliders = document.querySelectorAll(".slider");
+  sliders.forEach((slider) => {
+    slider.style.setProperty("--thumb-color", thumbColor);
+  });
 }
 
 async function fetchContrastRatio(textColor, bgColor) {
@@ -180,9 +199,9 @@ async function updateContrastRatio() {
 
 function displayContrastCheck(contrastRatio) {
   if (contrastRatio < 3) return "Fail";
-  if (contrastRatio >= 3 && contrastRatio < 4.5) return "WCAG AA";
+  if (contrastRatio >= 3 && contrastRatio < 4.5) return "AA";
   if (contrastRatio >= 4.5 && contrastRatio < 7) return "Large Text";
-  if (contrastRatio >= 7) return "WCAG AAA";
+  if (contrastRatio >= 7) return "AAA";
 }
 
 function adjustTextColor() {
@@ -190,11 +209,15 @@ function adjustTextColor() {
   const backgroundLightness = bgLightness.value;
 
   const textColor = backgroundLightness < 0.5 ? "#FFF" : "#000";
+  const bgColor = backgroundLightness > 0.5 ? "#FFF" : "#000";
   colorsSection.style.color = textColor;
   const textElements = colorsSection.querySelectorAll(".text");
   textElements.forEach((element) => {
     element.style.color = textColor;
   });
+
+  updateButtonStyles(textColor, bgColor);
+  updateSlideThumbsColor(textColor);
 }
 
 function debounce(func, wait) {
@@ -216,7 +239,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function start() {
   generateRandomColors();
-  updateBackgroundColor();
-  updateTextColor();
-  debounceUpdateContrastRatio();
+  debounceUpdateColorsAndContrast();
 }
