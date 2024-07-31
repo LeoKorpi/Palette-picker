@@ -125,6 +125,7 @@ function updateBackgroundColor() {
   let backgroundColorDisplay = document.querySelector(".background");
   backgroundColorDisplay.style.backgroundColor = hexColor;
   bgHex.value = hexColor;
+  updateSliderColor(bgLightness.value);
 }
 
 function updateTextColor() {
@@ -159,6 +160,15 @@ function updateSlideThumbsColor(thumbColor) {
   const sliders = document.querySelectorAll(".slider");
   sliders.forEach((slider) => {
     slider.style.setProperty("--thumb-color", thumbColor);
+  });
+}
+
+function updateSliderColor(lightness) {
+  const sliderBorderColor =
+    lightness > 0.5 ? "hsla(0, 0%, 0%, 0.4)" : "hsla(0, 0%, 100%, 0.4)";
+  const sliders = document.querySelectorAll(".slider");
+  sliders.forEach((slider) => {
+    slider.style.setProperty("--slider-border-color", sliderBorderColor);
   });
 }
 
@@ -208,7 +218,7 @@ function adjustTextColor() {
   const colorsSection = document.querySelector(".colors");
   const backgroundLightness = bgLightness.value;
 
-  const textColor = backgroundLightness < 0.5 ? "#FFF" : "#000";
+  const textColor = backgroundLightness <= 0.5 ? "#FFF" : "#000";
   const bgColor = backgroundLightness > 0.5 ? "#FFF" : "#000";
   colorsSection.style.color = textColor;
   const textElements = colorsSection.querySelectorAll(".text");

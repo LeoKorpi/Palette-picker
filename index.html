@@ -9,12 +9,10 @@
   </head>
   <body class="background">
     <main>
-      <h1>
-        <div class="header">
-          <span class="header-letters text">Aa</span>
-          <span id="contrast-ratio" class="contrast-ratio text"></span>
-          <span id="contrast-check" class="contrast-check text"></span>
-        </div>
+      <h1 class="header">
+        <span class="header-letters text">Aa</span>
+        <span id="contrast-ratio" class="contrast-ratio text"></span>
+        <span id="contrast-check" class="contrast-check text"></span>
       </h1>
 
       <section class="colors">
@@ -31,8 +29,9 @@
             />
           </div>
           <div class="colors-range">
-            <label for="text-hue" class="hsl-label text"
-              >Hue <span id="text-hue-value">0</span>°</label
+            <label for="text-hue" class="hsl-label text">Hue: </label>
+            <span class="hsl-label text"
+              ><span id="text-hue-value"></span>°</span
             >
             <input
               type="range"
@@ -45,8 +44,11 @@
           </div>
           <div class="colors-range">
             <label for="text-saturation" class="hsl-label text"
-              >Saturation <span id="text-saturation-value">0</span></label
-            >
+              >Saturation:
+            </label>
+            <span class="hsl-label text">
+              <span id="text-saturation-value"></span>
+            </span>
             <input
               type="range"
               name="saturation"
@@ -59,8 +61,11 @@
           </div>
           <div class="colors-range">
             <label for="text-lightness" class="hsl-label text"
-              >Lightness <span id="text-lightness-value">0</span></label
-            >
+              >Lightness:
+            </label>
+            <span class="hsl-label text">
+              <span id="text-lightness-value"></span>
+            </span>
             <input
               type="range"
               name="lightness"
@@ -76,7 +81,7 @@
         <div class="colors-background">
           <div class="colors-input">
             <h2 class="text">
-              <label class="colors-header" for="background-value" class="text"
+              <label class="colors-header text" for="background-value"
                 >Background</label
               >
             </h2>
@@ -88,8 +93,9 @@
             />
           </div>
           <div class="colors-range">
-            <label for="background-hue" class="hsl-label text"
-              >Hue <span id="background-hue-value">0</span>°</label
+            <label for="background-hue" class="hsl-label text">Hue: </label>
+            <span class="hsl-label text"
+              ><span id="background-hue-value"></span>°</span
             >
             <input
               type="range"
@@ -102,8 +108,11 @@
           </div>
           <div class="colors-range">
             <label for="background-saturation" class="hsl-label text"
-              >Saturation <span id="background-saturation-value">0</span></label
-            >
+              >Saturation:
+            </label>
+            <span class="hsl-label text"
+              ><span id="background-saturation-value"></span
+            ></span>
             <input
               type="range"
               name="saturation"
@@ -116,8 +125,11 @@
           </div>
           <div class="colors-range">
             <label for="background-lightness" class="hsl-label text"
-              >Lightness <span id="background-lightness-value">0</span></label
-            >
+              >Lightness:
+            </label>
+            <span class="hsl-label text"
+              ><span id="background-lightness-value"></span
+            ></span>
             <input
               type="range"
               name="lightness"
