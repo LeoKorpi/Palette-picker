@@ -47,10 +47,11 @@ main {
 
 .colors {
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   width: 80%;
-  gap: 20px;
+  gap: 4rem;
 }
 
 .colors-text,
@@ -58,6 +59,8 @@ main {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 28rem;
+  gap: 1rem;
 }
 
 .colors-input {
@@ -65,7 +68,7 @@ main {
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  padding-bottom: 2px;
+  padding-bottom: 0.25rem;
   height: 2.5rem;
   margin-bottom: 1rem;
 }
@@ -77,13 +80,23 @@ main {
   outline: none;
   text-align: right;
   width: 40%;
-  border-bottom: 1.5px solid currentColor;
+  border-bottom: 0.2rem solid currentColor;
   box-sizing: border-box;
   transition: border-bottom-width 120ms ease-in-out;
 }
 
 .input-field:focus {
-  border-bottom: 3.5px solid currentColor;
+  border-bottom: 0.375rem solid currentColor;
+}
+
+.colors-range {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.label {
+  width: auto;
 }
 
 .hsl-label,
@@ -94,7 +107,7 @@ main {
 .slider {
   appearance: none;
   width: 100%;
-  margin: 10px 0;
+  margin: 1rem 0;
   background-color: transparent;
 }
 
@@ -105,56 +118,56 @@ main {
 .slider::-webkit-slider-runnable-track {
   cursor: pointer;
   width: 100%;
-  height: 2px;
+  height: 0.2rem;
   border-radius: 0.5rem;
-  border: 2px solid var(--slider-border-color, hsla(0, 0%, 100%, 0.4));
+  border: 0.2rem solid var(--slider-border-color, hsla(0, 0%, 100%, 0.4));
 }
 
 .slider::-webkit-slider-thumb {
   appearance: none;
   cursor: pointer;
-  height: 18px;
-  width: 18px;
+  height: 1.5rem;
+  width: 1.5rem;
   background-color: var(--thumb-color, white);
   border-radius: 50%;
-  margin-top: -9px; /* För att centrera bollen på linjen*/
+  margin-top: -0.75rem; /* För att centrera bollen på linjen*/
 }
 
 .slider::-webkit-slider-thumb:active {
-  height: 21px;
-  width: 21px;
-  margin-top: -11px; /* För att centrera bollen på linjen*/
+  height: 2rem;
+  width: 2rem;
+  margin-top: -1rem; /* För att centrera bollen på linjen*/
 }
 
 .slider::-moz-range-track {
   cursor: pointer;
   width: 100%;
-  height: 2px;
+  height: 0.2rem;
   border-radius: 0.5rem;
-  border: 2px solid var(--slider-border-color, hsla(0, 0%, 100%, 0.4));
+  border: 0.2rem solid var(--slider-border-color, hsla(0, 0%, 100%, 0.4));
 }
 
 .slider::-moz-range-thumb {
   cursor: pointer;
-  height: 18px;
-  width: 18px;
+  height: 1.5rem;
+  width: 1.5rem;
   background-color: var(--thumb-color, white);
   border-radius: 50%;
 }
 
 .slider::-moz-range-thumb:active {
-  height: 21px;
-  width: 21px;
+  height: 2rem;
+  width: 2rem;
 }
 
 .slider::-ms-track {
   cursor: pointer;
   width: 100%;
-  height: 2px;
+  height: 0.2rem;
   border-radius: 0.5rem;
-  border: 2px solid transparent; /* Needed to remove default border in IE */
-  color: transparent; /* Needed to remove default border in IE */
-  background: transparent; /* Needed to remove default background in IE */
+  border: 0.2rem solid transparent;
+  color: transparent;
+  background: transparent;
 }
 
 .slider::-ms-fill-lower {
@@ -170,15 +183,15 @@ main {
 .slider::-ms-thumb {
   appearance: none;
   cursor: pointer;
-  height: 18px;
-  width: 18px;
+  height: 1.5rem;
+  width: 1.5rem;
   background-color: var(--thumb-color, white);
   border-radius: 50%;
 }
 
 .slider::-ms-thumb:active {
-  height: 21px;
-  width: 21px;
+  height: 2rem;
+  width: 2rem;
 }
 
 .buttons {
@@ -194,14 +207,14 @@ main {
 .button {
   appearance: none;
   padding: 0.75rem 1rem;
-  border-radius: 6px;
+  border-radius: 0.5rem;
   background-color: currentColor;
   color: transparent;
   border: none;
   cursor: pointer;
   font-size: 1.25rem;
   font-weight: 600;
-  min-width: 90px;
+  min-width: 8rem;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -222,15 +235,14 @@ main {
   }
 
   .colors {
-    flex-direction: row;
+    gap: 5rem;
   }
 
-  .button-group {
-    justify-content: flex-start;
-    gap: 40px;
+  .buttons {
+    width: 45%;
   }
 
   .input-field {
-    width: 30%;
+    width: 40%;
   }
 }
