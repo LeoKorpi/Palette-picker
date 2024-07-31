@@ -125,6 +125,7 @@ function updateBackgroundColor() {
   let backgroundColorDisplay = document.querySelector(".background");
   backgroundColorDisplay.style.backgroundColor = hexColor;
   bgHex.value = hexColor;
+
   updateSliderColor(bgLightness.value);
 }
 
@@ -170,6 +171,12 @@ function updateSliderColor(lightness) {
   sliders.forEach((slider) => {
     slider.style.setProperty("--slider-border-color", sliderBorderColor);
   });
+}
+
+function updateContrastCheckTextColor(bgColor) {
+  const contrastCheckDisplay = document.querySelector("#contrast-check");
+  const textColor = bgColor <= 0.5 ? "#fff" : "#000";
+  contrastCheckDisplay.style.color = textColor;
 }
 
 async function fetchContrastRatio(textColor, bgColor) {
@@ -228,6 +235,7 @@ function adjustTextColor() {
 
   updateButtonStyles(textColor, bgColor);
   updateSlideThumbsColor(textColor);
+  updateContrastCheckTextColor(backgroundLightness);
 }
 
 function debounce(func, wait) {
