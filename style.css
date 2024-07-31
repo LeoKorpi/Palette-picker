@@ -126,6 +126,61 @@ main {
   margin-top: -11px; /* För att centrera bollen på linjen*/
 }
 
+.slider::-moz-range-track {
+  cursor: pointer;
+  width: 100%;
+  height: 2px;
+  border-radius: 0.5rem;
+  border: 2px solid var(--slider-border-color, hsla(0, 0%, 100%, 0.4));
+}
+
+.slider::-moz-range-thumb {
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  background-color: var(--thumb-color, white);
+  border-radius: 50%;
+}
+
+.slider::-moz-range-thumb:active {
+  height: 21px;
+  width: 21px;
+}
+
+.slider::-ms-track {
+  cursor: pointer;
+  width: 100%;
+  height: 2px;
+  border-radius: 0.5rem;
+  border: 2px solid transparent; /* Needed to remove default border in IE */
+  color: transparent; /* Needed to remove default border in IE */
+  background: transparent; /* Needed to remove default background in IE */
+}
+
+.slider::-ms-fill-lower {
+  background: var(--slider-border-color, hsla(0, 0%, 100%, 0.4));
+  border-radius: 0.5rem;
+}
+
+.slider::-ms-fill-upper {
+  background: var(--slider-border-color, hsla(0, 0%, 100%, 0.4));
+  border-radius: 0.5rem;
+}
+
+.slider::-ms-thumb {
+  appearance: none;
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  background-color: var(--thumb-color, white);
+  border-radius: 50%;
+}
+
+.slider::-ms-thumb:active {
+  height: 21px;
+  width: 21px;
+}
+
 .buttons {
   width: 80%;
 }
