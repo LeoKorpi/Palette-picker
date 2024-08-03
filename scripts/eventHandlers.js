@@ -5,7 +5,12 @@ import {
   hslToHex,
 } from "./colorConversion.js";
 
-export function handleHexInput(event) {
+export function handleHexInput(
+  event,
+  textParams,
+  bgParams,
+  debounceUpdateColorsAndContrast
+) {
   const inputElement = event.target;
   let hexValue = inputElement.value.trim();
 
@@ -17,13 +22,13 @@ export function handleHexInput(event) {
   if (isValidHex(hexValue)) {
     const hsl = hexToHsl(expandHex(hexValue));
     if (inputElement.id === "text-value") {
-      textHue.value = hsl.h;
-      textSaturation.value = hsl.s / 100;
-      textLightness.value = hsl.l / 100;
+      textParams.hue.value = hsl.h;
+      textParams.saturation.value = hsl.s / 100;
+      textParams.lightness.value = hsl.l / 100;
     } else if (inputElement.id === "background-value") {
-      bgHue.value = hsl.h;
-      bgSaturation.value = hsl.s / 100;
-      bgLightness.value = hsl.l / 100;
+      bgParams.hue.value = hsl.h;
+      bgParams.saturation.value = hsl.s / 100;
+      bgParams.lightness.value = hsl.l / 100;
     }
     debounceUpdateColorsAndContrast();
   }

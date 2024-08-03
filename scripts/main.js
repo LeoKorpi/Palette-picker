@@ -41,36 +41,12 @@ let previousColors = {
 };
 
 const debounceUpdateColorsAndContrast = debounce(async () => {
-  updateBackgroundColor(
-    bgParams.hue,
-    bgParams.saturation,
-    bgParams.lightness,
-    bgParams.hexInput,
-    bgParams.hueValue,
-    bgParams.saturationValue,
-    bgParams.lightnessValue
-  );
+  updateBackgroundColor(bgParams);
 
-  const contrastRatio = await getContrastResult(
-    textParams.hue.value,
-    textParams.saturation.value,
-    textParams.lightness.value,
-    bgParams.hue.value,
-    bgParams.saturation.value,
-    bgParams.lightness.value
-  );
+  const contrastRatio = await getContrastResult(textParams, bgParams);
   const contrastResult = displayContrastCheck(contrastRatio);
 
-  updateTextColor(
-    textParams.hue,
-    textParams.saturation,
-    textParams.lightness,
-    textParams.hexInput,
-    textParams.hueValue,
-    textParams.saturationValue,
-    textParams.lightnessValue,
-    bgParams.hexInput
-  );
+  updateTextColor(textParams, bgParams.hexInput);
 
   if (contrastResult === "Fail") {
     adjustTextColor(
@@ -90,28 +66,10 @@ const debounceUpdateColorsAndContrast = debounce(async () => {
 }, 12); // antalet millisekunder innan metoden kan kallas på igen
 
 textParams.hexInput.addEventListener("input", (event) =>
-  handleHexInput(
-    event,
-    textParams.hue,
-    textParams.saturation,
-    textParams.lightness,
-    bgParams.hue,
-    bgParams.saturation,
-    bgParams.lightness,
-    debounceUpdateColorsAndContrast
-  )
+  handleHexInput(event, textParams, bgParams, debounceUpdateColorsAndContrast)
 );
 bgParams.hexInput.addEventListener("input", (event) =>
-  handleHexInput(
-    event,
-    textParams.hue,
-    textParams.saturation,
-    textParams.lightness,
-    bgParams.hue,
-    bgParams.saturation,
-    bgParams.lightness,
-    debounceUpdateColorsAndContrast
-  )
+  handleHexInput(event, textParams, bgParams, debounceUpdateColorsAndContrast)
 );
 
 const handleSliderEvent = (event) => {
@@ -162,28 +120,12 @@ bgParams.lightness.addEventListener("input", () => {
 
 const rndButton = document.querySelector("#button-random");
 rndButton.addEventListener("click", () => {
-  generateRandomColors(
-    textParams.hue,
-    textParams.saturation,
-    textParams.lightness,
-    bgParams.hue,
-    bgParams.saturation,
-    bgParams.lightness,
-    debounceUpdateColorsAndContrast
-  );
+  generateRandomColors(textParams, bgParams, debounceUpdateColorsAndContrast);
 });
 
 const revButton = document.querySelector("#button-reverse");
 revButton.addEventListener("click", () => {
-  switchColors(
-    textParams.hue,
-    textParams.saturation,
-    textParams.lightness,
-    bgParams.hue,
-    bgParams.saturation,
-    bgParams.lightness,
-    debounceUpdateColorsAndContrast
-  );
+  switchColors(textParams, bgParams, debounceUpdateColorsAndContrast);
 });
 
 function getBgHex() {
@@ -195,15 +137,7 @@ function getTextHex() {
 }
 
 function start() {
-  generateRandomColors(
-    textParams.hue,
-    textParams.saturation,
-    textParams.lightness,
-    bgParams.hue,
-    bgParams.saturation,
-    bgParams.lightness,
-    debounceUpdateColorsAndContrast
-  );
+  generateRandomColors(textParams, bgParams, debounceUpdateColorsAndContrast);
   previousColors = {
     text: getTextHex(),
     background: getBgHex(),

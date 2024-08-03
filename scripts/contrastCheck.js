@@ -8,23 +8,16 @@ export async function fetchContrastRatio(textColor, bgColor) {
   return data;
 }
 
-export async function getContrastResult(
-  textHue,
-  textSaturation,
-  textLightness,
-  bgHue,
-  bgSaturation,
-  bgLightness
-) {
+export async function getContrastResult(textParams, bgParams) {
   const textHexColor = hslToHex(
-    textHue,
-    textSaturation * 100,
-    textLightness * 100
+    textParams.hue.value,
+    textParams.saturation.value * 100,
+    textParams.lightness.value * 100
   ).substring(1); //Substring för att ta bort '#'
   const bgHexColor = hslToHex(
-    bgHue,
-    bgSaturation * 100,
-    bgLightness * 100
+    bgParams.hue.value,
+    bgParams.saturation.value * 100,
+    bgParams.lightness.value * 100
   ).substring(1);
 
   const data = await fetchContrastRatio(textHexColor, bgHexColor);

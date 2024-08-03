@@ -1,54 +1,55 @@
 import { hslToHex } from "./colorConversion.js";
 
-export function updateBackgroundColor(
-  bgHue,
-  bgSaturation,
-  bgLightness,
-  bgHexInput,
-  bgHueValue,
-  bgSaturationValue,
-  bgLightnessValue
-) {
-  const h = bgHue.value;
-  const s = bgSaturation.value * 100;
-  const l = bgLightness.value * 100;
+export function updateBackgroundColor(bgParams) {
+  const {
+    hue,
+    saturation,
+    lightness,
+    hexInput,
+    hueValue,
+    saturationValue,
+    lightnessValue,
+  } = bgParams;
+  const h = hue.value;
+  const s = saturation.value * 100;
+  const l = lightness.value * 100;
   const hexColor = hslToHex(h, s, l);
 
-  if (bgHueValue) bgHueValue.textContent = bgHue.value;
-  if (bgSaturationValue) bgSaturationValue.textContent = bgSaturation.value;
-  if (bgLightnessValue) bgLightnessValue.textContent = bgLightness.value;
+  if (hueValue) hueValue.textContent = hue.value;
+  if (saturationValue) saturationValue.textContent = saturation.value;
+  if (lightnessValue) lightnessValue.textContent = lightness.value;
 
   let backgroundColorDisplay = document.querySelector(".background");
   backgroundColorDisplay.style.backgroundColor = hexColor;
-  bgHexInput.value = hexColor;
+  hexInput.value = hexColor;
 
-  updateSliderColor(bgLightness.value);
+  updateSliderColor(lightness.value);
 }
 
-export function updateTextColor(
-  textHue,
-  textSaturation,
-  textLightness,
-  textHexInput,
-  textHueValue,
-  textSaturationValue,
-  textLightnessValue,
-  bgHexInput
-) {
-  const h = textHue.value;
-  const s = textSaturation.value * 100;
-  const l = textLightness.value * 100;
+export function updateTextColor(textParams, bgHexInput) {
+  const {
+    hue,
+    saturation,
+    lightness,
+    hexInput,
+    hueValue,
+    saturationValue,
+    lightnessValue,
+  } = textParams;
+  const h = hue.value;
+  const s = saturation.value * 100;
+  const l = lightness.value * 100;
   const hexColor = hslToHex(h, s, l);
 
-  textHueValue.textContent = textHue.value;
-  textSaturationValue.textContent = textSaturation.value;
-  textLightnessValue.textContent = textLightness.value;
+  if (hueValue) hueValue.textContent = hue.value;
+  if (saturationValue) saturationValue.textContent = saturation.value;
+  if (lightness) lightnessValue.textContent = lightness.value;
 
   let textColorDisplay = document.querySelectorAll(".text");
   textColorDisplay.forEach((element) => {
     element.style.color = hexColor;
   });
-  textHexInput.value = hexColor;
+  hexInput.value = hexColor;
 
   updateButtonStyles(hexColor, bgHexInput.value);
   updateSlideThumbsColor(hexColor);

@@ -1,60 +1,36 @@
-import { updateBackgroundColor, updateTextColor } from "./uiUpdates.js";
-import { debounce } from "./utils.js";
+import { updateBackgroundColor } from "./uiUpdates.js";
 
 export function generateRandomColors(
-  textHue,
-  textSaturation,
-  textLightness,
-  bgHue,
-  bgSaturation,
-  bgLightness,
-  debounceUpdateColorsAndContrast,
-  bgHexInput,
-  bgHueValue,
-  bgSaturationValue,
-  bgLightnessValue
+  textParams,
+  bgParams,
+  debounceUpdateColorsAndContrast
 ) {
-  textHue.value = generateHue();
-  textSaturation.value = generateSaturationOrLightness();
-  textLightness.value = generateSaturationOrLightness();
-  bgHue.value = generateHue();
-  bgSaturation.value = generateSaturationOrLightness();
-  bgLightness.value = generateSaturationOrLightness();
+  textParams.hue.value = generateHue();
+  textParams.saturation.value = generateSaturationOrLightness();
+  textParams.lightness.value = generateSaturationOrLightness();
+  bgParams.hue.value = generateHue();
+  bgParams.saturation.value = generateSaturationOrLightness();
+  bgParams.lightness.value = generateSaturationOrLightness();
 
-  updateBackgroundColor(
-    bgHue,
-    bgSaturation,
-    bgLightness,
-    debounceUpdateColorsAndContrast,
-    bgHexInput,
-    bgHueValue,
-    bgSaturationValue,
-    bgLightnessValue
-  );
+  updateBackgroundColor(bgParams);
   debounceUpdateColorsAndContrast();
 }
 
 export function switchColors(
-  textHue,
-  textSaturation,
-  textLightness,
-  bgHue,
-  bgSaturation,
-  bgLightness,
+  textParams,
+  bgParams,
   debounceUpdateColorsAndContrast
 ) {
-  const tempHue = textHue.value;
-  const tempSat = textSaturation.value;
-  const tempLight = textLightness.value;
-  textHue.value = bgHue.value;
-  textSaturation.value = bgSaturation.value;
-  textLightness.value = bgLightness.value;
-  bgHue.value = tempHue;
-  bgSaturation.value = tempSat;
-  bgLightness.value = tempLight;
+  const tempHue = textParams.hue.value;
+  const tempSat = textParams.saturation.value;
+  const tempLight = textParams.lightness.value;
+  textParams.hue.value = bgParams.hue.value;
+  textParams.saturation.value = bgParams.saturation.value;
+  textParams.lightness.value = bgParams.lightness.value;
+  bgParams.hue.value = tempHue;
+  bgParams.saturation.value = tempSat;
+  bgParams.lightness.value = tempLight;
   debounceUpdateColorsAndContrast();
-
-  //Det är något konstigt här, funkar endast när contrast-ration är över 3 (varför?)
 }
 
 export function generateHue() {
