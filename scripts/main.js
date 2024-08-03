@@ -61,28 +61,27 @@ const debounceUpdateColorsAndContrast = debounce(async () => {
   );
   const contrastResult = displayContrastCheck(contrastRatio);
 
-  if (contrastResult !== previousColors.contrastResult) {
-    if (contrastResult === "Fail") {
-      adjustTextColor(
-        colorsSection,
-        bgParams.lightness.value,
-        textElements,
-        updateButtonStyles,
-        updateSlideThumbsColor,
-        updateContrastCheckTextColor
-      );
-    } else {
-      updateTextColor(
-        textParams.hue,
-        textParams.saturation,
-        textParams.lightness,
-        textParams.hexInput,
-        textParams.hueValue,
-        textParams.saturationValue,
-        textParams.lightnessValue,
-        bgParams.hexInput
-      );
-    }
+  updateTextColor(
+    textParams.hue,
+    textParams.saturation,
+    textParams.lightness,
+    textParams.hexInput,
+    textParams.hueValue,
+    textParams.saturationValue,
+    textParams.lightnessValue,
+    bgParams.hexInput
+  );
+
+  if (contrastResult === "Fail") {
+    adjustTextColor(
+      colorsSection,
+      bgParams.lightness.value,
+      textElements,
+      updateButtonStyles,
+      updateSlideThumbsColor,
+      updateContrastCheckTextColor
+    );
+
     previousColors.contrastResult = contrastResult;
   }
 
