@@ -1,6 +1,6 @@
 import { hslToHex } from "./colorConversion.js";
 
-export function updateBackgroundColor(bgParams) {
+export function updateBackgroundColor(bgParams, originalHex) {
   const {
     hue,
     saturation,
@@ -10,6 +10,7 @@ export function updateBackgroundColor(bgParams) {
     saturationValue,
     lightnessValue,
   } = bgParams;
+
   const h = hue.value;
   const s = saturation.value * 100;
   const l = lightness.value * 100;
@@ -19,14 +20,14 @@ export function updateBackgroundColor(bgParams) {
   if (saturationValue) saturationValue.textContent = saturation.value;
   if (lightnessValue) lightnessValue.textContent = lightness.value;
 
-  let backgroundColorDisplay = document.querySelector(".background");
+  const backgroundColorDisplay = document.querySelector(".background");
   backgroundColorDisplay.style.backgroundColor = hexColor;
-  hexInput.value = hexColor;
+  hexInput.value = originalHex;
 
   updateSliderColor(lightness.value);
 }
 
-export function updateTextColor(textParams, bgHexInput) {
+export function updateTextColor(textParams, bgHexInput, originalHex) {
   const {
     hue,
     saturation,
@@ -36,6 +37,7 @@ export function updateTextColor(textParams, bgHexInput) {
     saturationValue,
     lightnessValue,
   } = textParams;
+
   const h = hue.value;
   const s = saturation.value * 100;
   const l = lightness.value * 100;
@@ -43,15 +45,15 @@ export function updateTextColor(textParams, bgHexInput) {
 
   if (hueValue) hueValue.textContent = hue.value;
   if (saturationValue) saturationValue.textContent = saturation.value;
-  if (lightness) lightnessValue.textContent = lightness.value;
+  if (lightnessValue) lightnessValue.textContent = lightness.value;
 
-  let textColorDisplay = document.querySelectorAll(".text");
+  const textColorDisplay = document.querySelectorAll(".text");
   textColorDisplay.forEach((element) => {
     element.style.color = hexColor;
   });
-  hexInput.value = hexColor;
+  hexInput.value = originalHex;
 
-  updateButtonStyles(hexColor, bgHexInput.value);
+  updateButtonStyles(hexInput.value, bgHexInput.value);
   updateSlideThumbsColor(hexColor);
 }
 
@@ -81,8 +83,8 @@ export function adjustTextColor(
 export function updateButtonStyles(textColor, bgColor) {
   const buttons = document.querySelectorAll(".button.text");
   buttons.forEach((button) => {
-    button.style.backgroundColor = textColor;
     button.style.color = bgColor;
+    button.style.backgroundColor = textColor;
   });
 }
 

@@ -1,4 +1,9 @@
-import { handleHexInput, handleSliderChange } from "./eventHandlers.js";
+import {
+  handleHexInput,
+  handleSliderChange,
+  handleSliderEnd,
+  getOriginalHexValues,
+} from "./eventHandlers.js";
 import {
   updateBackgroundColor,
   updateTextColor,
@@ -34,19 +39,17 @@ const bgParams = {
 const colorsSection = document.querySelector(".colors");
 const textElements = colorsSection.querySelectorAll(".text");
 
-let previousColors = {
-  text: "#000000",
-  background: "#ffffff",
-  contrastResult: null,
-};
+function updateColors() {
+  const originalHexValues = getOriginalHexValues();
+  updateTextColor(textParams, bgParams.hexInput, originalHexValues.text);
+  updateBackgroundColor(bgParams, originalHexValues.background);
+}
 
-const debounceUpdateColorsAndContrast = debounce(async () => {
-  updateBackgroundColor(bgParams);
-
+const debounceUpdateContrast = debounce(async () => {
   const contrastRatio = await getContrastResult(textParams, bgParams);
   const contrastResult = displayContrastCheck(contrastRatio);
 
-  updateTextColor(textParams, bgParams.hexInput);
+  updateColors();
 
   if (contrastResult === "Fail") {
     adjustTextColor(
@@ -57,30 +60,28 @@ const debounceUpdateColorsAndContrast = debounce(async () => {
       updateSlideThumbsColor,
       updateContrastCheckTextColor
     );
-
-    previousColors.contrastResult = contrastResult;
   }
 
   document.querySelector("#contrast-ratio").textContent = contrastRatio;
   document.querySelector("#contrast-check").textContent = contrastResult;
 }, 12); // antalet millisekunder innan metoden kan kallas på igen
 
-textParams.hexInput.addEventListener("input", (event) =>
-  handleHexInput(event, textParams, bgParams, debounceUpdateColorsAndContrast)
+textParams.hexInput.addEventListener("keypress", (event) =>
+  handleHexInput(event, textParams, bgParams, debounceUpdateContrast)
 );
-bgParams.hexInput.addEventListener("input", (event) =>
-  handleHexInput(event, textParams, bgParams, debounceUpdateColorsAndContrast)
+bgParams.hexInput.addEventListener("keypress", (event) =>
+  handleHexInput(event, textParams, bgParams, debounceUpdateContrast)
 );
 
-const handleSliderEvent = (event) => {
-  handleSliderChange(
-    event,
-    textParams,
-    bgParams,
-    debounceUpdateColorsAndContrast
-  );
+const handleSliderEvent = () => {
+  handleSliderChange(textParams, bgParams, debounceUpdateContrast);
 };
 
+const handleSliderEndEvent = () => {
+  handleSliderEnd(textParams, bgParams, debounceUpdateContrast);
+};
+
+// Input-events avfyras inte när elements värden ändras genom js
 textParams.hue.addEventListener("input", handleSliderEvent);
 textParams.saturation.addEventListener("input", handleSliderEvent);
 textParams.lightness.addEventListener("input", handleSliderEvent);
@@ -88,62 +89,26 @@ bgParams.hue.addEventListener("input", handleSliderEvent);
 bgParams.saturation.addEventListener("input", handleSliderEvent);
 bgParams.lightness.addEventListener("input", handleSliderEvent);
 
-textParams.hue.addEventListener("input", () => {
-  textParams.hueValue.textContent = textParams.hue.value;
-  debounceUpdateColorsAndContrast();
-});
-
-textParams.saturation.addEventListener("input", () => {
-  textParams.saturationValue.textContent = textParams.saturation.value;
-  debounceUpdateColorsAndContrast();
-});
-
-textParams.lightness.addEventListener("input", () => {
-  textParams.lightnessValue.textContent = textParams.lightness.value;
-  debounceUpdateColorsAndContrast();
-});
-
-bgParams.hue.addEventListener("input", () => {
-  bgParams.hueValue.textContent = bgParams.hue.value;
-  debounceUpdateColorsAndContrast();
-});
-
-bgParams.saturation.addEventListener("input", () => {
-  bgParams.saturationValue.textContent = bgParams.saturation.value;
-  debounceUpdateColorsAndContrast();
-});
-
-bgParams.lightness.addEventListener("input", () => {
-  bgParams.lightnessValue.textContent = bgParams.lightness.value;
-  debounceUpdateColorsAndContrast();
-});
+textParams.hue.addEventListener("change", handleSliderEndEvent);
+textParams.saturation.addEventListener("change", handleSliderEndEvent);
+textParams.lightness.addEventListener("change", handleSliderEndEvent);
+bgParams.hue.addEventListener("change", handleSliderEndEvent);
+bgParams.saturation.addEventListener("change", handleSliderEndEvent);
+bgParams.lightness.addEventListener("change", handleSliderEndEvent);
 
 const rndButton = document.querySelector("#button-random");
 rndButton.addEventListener("click", () => {
-  generateRandomColors(textParams, bgParams, debounceUpdateColorsAndContrast);
+  generateRandomColors(textParams, bgParams, debounceUpdateContrast);
 });
 
 const revButton = document.querySelector("#button-reverse");
 revButton.addEventListener("click", () => {
-  switchColors(textParams, bgParams, debounceUpdateColorsAndContrast);
+  switchColors(textParams, bgParams, debounceUpdateContrast);
 });
 
-function getBgHex() {
-  return bgParams.hexInput.value;
-}
-
-function getTextHex() {
-  return textParams.hexInput.value;
-}
-
 function start() {
-  generateRandomColors(textParams, bgParams, debounceUpdateColorsAndContrast);
-  previousColors = {
-    text: getTextHex(),
-    background: getBgHex(),
-    contrastResult: null,
-  };
-  debounceUpdateColorsAndContrast();
+  generateRandomColors(textParams, bgParams, debounceUpdateContrast);
+  debounceUpdateContrast();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
