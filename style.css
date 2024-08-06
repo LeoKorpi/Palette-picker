@@ -1,14 +1,40 @@
+:root {
+  --font-size-header: 4rem;
+  --font-size-heading-2: 2.5rem;
+  --font-size-heading-3: 1.5rem;
+  --font-size-heading-4: 1.125rem;
+  --font-size-paragraph: 1rem;
+  --font-family-serif: "Domine", "Georgia";
+  --font-family-sans: "Work Sans", "Montserrat", "Arial";
+}
+
 * {
   margin: 0;
   padding: 0;
-  font-size: 12px;
+  box-sizing: border-box;
 }
 
 body {
-  min-height: 100vh;
-  width: 100vw;
+  min-height: 100dvh;
+  width: 100dvw;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  line-height: 1.5em;
+  letter-spacing: 0.12em;
+  word-spacing: 0.16em;
+}
+
+header,
+main,
+footer {
+  width: 85%;
+}
+
+header {
+  margin-top: 3rem;
 }
 
 main {
@@ -17,32 +43,109 @@ main {
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  width: 100%;
 }
 
-.header {
+h1 {
+  font-size: var(--font-size-header);
+}
+
+h2 {
+  font-size: var(--font-size-heading-2);
+}
+
+h3 {
+  font-size: var(--font-size-heading-3);
+}
+
+h4 {
+  font-size: var(--font-size-heading-4);
+}
+
+p {
+  margin-bottom: 2em;
+}
+
+.heading {
+  font-family: var(--font-family-serif);
+}
+
+.paragraph {
+  font-size: var(--font-size-paragraph);
+  font-family: var(--font-family-sans);
+  margin-bottom: 2rem;
+}
+
+.header-text {
+  font-size: var(--font-size-header);
+  text-align: center;
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+.contrast-info {
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
   align-items: baseline;
-  gap: 0.75rem;
+  flex-wrap: wrap;
+  max-width: 740px;
+  margin-bottom: 1rem;
+  letter-spacing: normal;
 }
 
-.header-letters,
+.contrast-heading,
 .contrast-ratio {
-  font-size: 5rem;
+  font-size: var(--font-size-heading-2);
 }
 
 .contrast-ratio {
   font-weight: 400;
 }
 
-.contrast-check {
-  font-size: 3rem;
+.contrast-results,
+.contrast {
+  font-size: var(--font-size-heading-3);
 }
 
+.contrast-heading {
+  line-height: 1.2em;
+  margin-bottom: 0.625rem;
+}
+
+.contrast-ratio-and-results {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  margin-bottom: 2rem;
+  letter-spacing: normal;
+}
+
+.contrast-example {
+  border-width: 4px;
+  border-style: solid;
+  border-radius: 1.5rem;
+  padding: 2rem 1.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: normal;
+}
+
+.contrast-example h4,
+.contrast-example p,
 .colors-header,
-.input-field {
-  font-size: 2.5rem;
+.input-field,
+.label,
+.button {
+  font-family: var(--font-family-sans);
+}
+
+.contrast-example-heading {
+  line-height: normal;
+  margin-bottom: 0.625rem;
+}
+
+.contrast-example-heading h3 {
+  margin-bottom: 0.25rem;
 }
 
 .colors {
@@ -50,8 +153,13 @@ main {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  width: 80%;
-  gap: 4rem;
+  width: 100%;
+  gap: 3rem;
+}
+
+.colors-header,
+.input-field {
+  font-size: var(--font-size-heading-4);
 }
 
 .colors-text,
@@ -59,7 +167,7 @@ main {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 28rem;
+  max-width: 440px;
   gap: 1rem;
 }
 
@@ -69,7 +177,7 @@ main {
   justify-content: space-between;
   align-items: baseline;
   padding-bottom: 0.25rem;
-  height: 2.5rem;
+  height: 2rem;
   margin-bottom: 1rem;
 }
 
@@ -82,7 +190,7 @@ main {
   width: 40%;
   border-bottom: 0.2rem solid currentColor;
   box-sizing: border-box;
-  transition: border-bottom-width 120ms ease-in-out;
+  transition: border-bottom-width 120ms ease-in;
 }
 
 .input-field:focus {
@@ -99,9 +207,8 @@ main {
   width: auto;
 }
 
-.hsl-label,
-.hsl-label span {
-  font-size: 1.5rem;
+.hsl-label {
+  font-size: var(--font-size-paragraph);
 }
 
 .slider {
@@ -194,44 +301,61 @@ main {
   width: 2rem;
 }
 
+.threshold {
+  /* Lägg till någon fyndig styling här*/
+  padding: 2rem;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .buttons {
-  width: 80%;
+  width: 100%;
+  margin-bottom: 2rem;
 }
 
 .button-group {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 1.5rem;
 }
 
 .button {
   appearance: none;
-  padding: 0.75rem 1rem;
+  padding: 0.675rem 1rem;
   border-radius: 0.5rem;
   background-color: currentColor;
   color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 1.25rem;
+  font-size: var(--font-size-heading-4);
   font-weight: 600;
   min-width: 8rem;
 }
 
-@media only screen and (min-width: 1024px) {
-  .header-letters {
-    font-size: 12rem;
-  }
+.wcag-info {
+  max-width: 740px;
+}
 
-  .contrast-ratio {
-    font-size: 8rem;
-  }
+/*Fixa styling för att göra texten i footers och citat-sektionen större*/
 
-  .contrast-check {
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+@media only screen and (min-width: 64em) {
+  .header-text {
     font-size: 5rem;
-  }
-
-  .header {
-    gap: 1.5rem;
   }
 
   .colors {
@@ -239,7 +363,7 @@ main {
   }
 
   .buttons {
-    width: 45%;
+    width: 40%;
   }
 
   .input-field {

@@ -7,14 +7,17 @@ import {
 import {
   updateBackgroundColor,
   updateTextColor,
-  updateButtonStyles,
-  updateSlideThumbsColor,
   adjustTextColor,
-  updateContrastCheckTextColor,
+  getYear,
+  getTodaysDate,
 } from "./uiUpdates.js";
 import { debounce } from "./utils.js";
 import { generateRandomColors, switchColors } from "./colorSettings.js";
-import { getContrastResult, displayContrastCheck } from "./contrastCheck.js";
+import {
+  getContrastResult,
+  displayContrastHeading,
+  displayContrastCheck,
+} from "./contrastCheck.js";
 
 const textParams = {
   hexInput: document.querySelector("#text-value"),
@@ -36,8 +39,9 @@ const bgParams = {
   lightnessValue: document.querySelector("#background-lightness-value"),
 };
 
-const colorsSection = document.querySelector(".colors");
-const textElements = colorsSection.querySelectorAll(".text");
+const content = document.querySelector("main");
+const textElements = content.querySelectorAll(".text");
+const smallTextElements = content.querySelectorAll(".small-text");
 
 function updateColors() {
   const originalHexValues = getOriginalHexValues();
@@ -48,23 +52,32 @@ function updateColors() {
 const debounceUpdateContrast = debounce(async () => {
   const contrastRatio = await getContrastResult(textParams, bgParams);
   const contrastResult = displayContrastCheck(contrastRatio);
+  const contrastHeading = displayContrastHeading(contrastRatio);
 
   updateColors();
 
-  if (contrastResult === "Fail") {
+  if (contrastResult === "WCAG AA") {
     adjustTextColor(
-      colorsSection,
+      contrastRatio,
+      content,
       bgParams.lightness.value,
-      textElements,
-      updateButtonStyles,
-      updateSlideThumbsColor,
-      updateContrastCheckTextColor
+      smallTextElements
     );
   }
 
+  if (contrastResult === "Fail") {
+    adjustTextColor(
+      contrastRatio,
+      content,
+      bgParams.lightness.value,
+      textElements
+    );
+  }
+
+  document.querySelector("#contrast-heading").textContent = contrastHeading;
   document.querySelector("#contrast-ratio").textContent = contrastRatio;
   document.querySelector("#contrast-check").textContent = contrastResult;
-}, 12); // antalet millisekunder innan metoden kan kallas på igen
+}, 5); // antalet millisekunder innan metoden kan kallas på igen
 
 textParams.hexInput.addEventListener("keypress", (event) =>
   handleHexInput(event, textParams, bgParams, debounceUpdateContrast)
@@ -105,6 +118,12 @@ const revButton = document.querySelector("#button-reverse");
 revButton.addEventListener("click", () => {
   switchColors(textParams, bgParams, debounceUpdateContrast);
 });
+
+const currentYear = document.querySelector("#current-year");
+currentYear.textContent = getYear();
+
+const todaysDate = document.querySelector("#today-date");
+todaysDate.textContent = getTodaysDate();
 
 function start() {
   generateRandomColors(textParams, bgParams, debounceUpdateContrast);

@@ -5,22 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ändra titeln och kom på ett nytt namn</title>
     <link rel="stylesheet" href="style.css" />
-    <script type="module" src="./scripts/main.js" defer></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script type="module" src="./scripts/main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body class="background">
+    <header>
+      <h1 class="header-text heading text">How's the contrast?</h1>
+    </header>
     <main>
-      <h1 class="header">
-        <span class="header-letters text">Aa</span>
-        <span id="contrast-ratio" class="contrast-ratio text"></span>
-        <span id="contrast-check" class="contrast-check text"></span>
-      </h1>
+      <section class="contrast-info">
+        <h2 class="contrast-heading heading text" id="contrast-heading">
+          <!-- Fylls i med js -->
+        </h2>
+        <div class="contrast-ratio-and-results">
+          <h3 class="heading text">
+            Ratio:
+            <span
+              id="contrast-ratio"
+              class="contrast-results heading text"
+            ></span>
+          </h3>
+          <h3 class="heading text">
+            Results:
+            <span
+              id="contrast-check"
+              class="contrast-results heading text"
+            ></span>
+          </h3>
+        </div>
+        <article class="contrast-example">
+          <div class="contrast-example-heading">
+            <h2 class="heading text">Example of a Title</h2>
+            <h3 class="heading text">A subtitle for the article</h3>
+            <h4 class="heading text" id="today-date">
+              <!-- Fylls i med js -->
+            </h4>
+          </div>
+          <p class="paragraph small-text text">
+            Contrast is the difference in luminance or color that makes an
+            object (or its representation in an image or display)
+            distinguishable. In visual perception of the real world, contrast is
+            determined by the difference in the color and brightness of the
+            object and other objects within the same field of view.
+            <br />
+            For accessibility purposes, designers should aim for a 4.5:1 ratio
+            between the foreground color (e.g. text, links, etc.) and the
+            background color. This ratio ensures people with moderately low
+            vision can tell the colors apart and see the content.
+          </p>
+        </article>
+      </section>
 
       <section class="colors">
         <div class="colors-text">
           <div class="colors-input">
-            <h2 class="text">
+            <h3 class="text">
               <label class="colors-header" for="text-value">Text</label>
-            </h2>
+            </h3>
             <input
               type="text"
               name="text-value"
@@ -32,9 +85,15 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label for="text-hue" class="hsl-label text">Hue: </label>
-              <span class="hsl-label text"
-                ><span id="text-hue-value"></span>°</span
+              <label for="text-hue" class="hsl-label paragraph small-text text"
+                >Hue:
+              </label>
+              <span class="hsl-label paragraph small-text text"
+                ><span
+                  class="hsl-label paragraph small-text text"
+                  id="text-hue-value"
+                ></span
+                >°</span
               >
             </div>
             <input
@@ -48,11 +107,16 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label for="text-saturation" class="hsl-label text"
+              <label
+                for="text-saturation"
+                class="hsl-label paragraph small-text text"
                 >Saturation:
               </label>
-              <span class="hsl-label text">
-                <span id="text-saturation-value"></span>
+              <span class="hsl-label paragraph small-text text">
+                <span
+                  class="hsl-label paragraph small-text text"
+                  id="text-saturation-value"
+                ></span>
               </span>
             </div>
             <input
@@ -67,11 +131,16 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label for="text-lightness" class="hsl-label text"
+              <label
+                for="text-lightness"
+                class="hsl-label paragraph small-text text"
                 >Lightness:
               </label>
-              <span class="hsl-label text">
-                <span id="text-lightness-value"></span>
+              <span class="hsl-label paragraph small-text text">
+                <span
+                  class="hsl-label paragraph small-text text"
+                  id="text-lightness-value"
+                ></span>
               </span>
             </div>
             <input
@@ -88,11 +157,11 @@
 
         <div class="colors-background">
           <div class="colors-input">
-            <h2 class="text">
+            <h3 class="text">
               <label class="colors-header text" for="background-value"
                 >Background</label
               >
-            </h2>
+            </h3>
             <input
               type="text"
               name="background-value"
@@ -104,9 +173,14 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label for="background-hue" class="hsl-label text">Hue: </label>
-              <span class="hsl-label text"
-                ><span id="background-hue-value"></span>°</span
+              <label
+                for="background-hue"
+                class="hsl-label paragraph small-text text"
+                >Hue:
+              </label>
+              <span class="hsl-label paragraph small-text text"
+                ><span class="hsl-label" id="background-hue-value"></span
+                >°</span
               >
             </div>
             <input
@@ -120,11 +194,13 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label for="background-saturation" class="hsl-label text"
+              <label
+                for="background-saturation"
+                class="hsl-label paragraph small-text text"
                 >Saturation:
               </label>
-              <span class="hsl-label text"
-                ><span id="background-saturation-value"></span
+              <span class="hsl-label paragraph small-text text"
+                ><span class="hsl-label" id="background-saturation-value"></span
               ></span>
             </div>
             <input
@@ -139,11 +215,13 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label for="background-lightness" class="hsl-label text"
+              <label
+                for="background-lightness"
+                class="hsl-label paragraph small-text text"
                 >Lightness:
               </label>
-              <span class="hsl-label text"
-                ><span id="background-lightness-value"></span
+              <span class="hsl-label paragraph small-text text"
+                ><span class="hsl-label" id="background-lightness-value"></span
               ></span>
             </div>
             <input
@@ -158,12 +236,76 @@
           </div>
         </div>
       </section>
+
       <div class="buttons">
         <div class="button-group">
-          <button class="button text" id="button-random">Random</button>
-          <button class="button text" id="button-reverse">Reverse</button>
+          <button class="button text" id="button-random">
+            <i class="fa-solid fa-shuffle"></i> Random
+          </button>
+          <button class="button text" id="button-reverse">
+            <i class="fa-solid fa-right-left"></i> Reverse
+          </button>
         </div>
       </div>
+
+      <section class="wcag-info">
+        <h2 class="heading contrast-heading text">
+          What does "WCAG" stand for?
+        </h2>
+        <p class="paragraph small-text text">
+          The Web Content Accessibility Guidelines (WCAG) 2.0 and 2.1 are a set
+          of recommendations designed to make web content more accessible to
+          people with disabilities. Developed by the World Wide Web Consortium
+          (W3C), these guidelines address a wide range of disabilities,
+          including visual, auditory, physical, speech, cognitive, language,
+          learning, and neurological disabilities.
+        </p>
+        <h2 class="heading contrast-heading text">
+          Why is this important? And how does this affect me?
+        </h2>
+        <p class="paragraph small-text text">
+          The European Union (EU) has adopted these guidelines as part of its
+          web accessibility directives. The EU Web Accessibility Directive
+          mandates that public sector websites and mobile applications must meet
+          specific accessibility standards, and WCAG 2.1 AA level is the
+          benchmark. The significance of Guideline 1.4 in the EU is that it
+          ensures digital content is accessible to people with visual
+          impairments or color blindness by addressing issues like color
+          contrast and text visibility. This not only helps in compliance with
+          legal standards but also promotes inclusivity, ensuring that all
+          users, regardless of their abilities, have equal access to digital
+          content and services. Adherence to these guidelines helps public
+          sector bodies create web content that is more usable and accessible to
+          everyone, which is a key aspect of digital inclusion and equality in
+          the digital age.
+        </p>
+      </section>
+      <section>
+        <blockquote>
+          <p class="text">
+            "Color! What a deep and mysterious language, the language of
+            dreams."
+            <br />
+            - Paul Gauguin
+          </p>
+        </blockquote>
+      </section>
     </main>
+    <footer>
+      <span class="text"
+        >&#169; Leo Korpi <span id="current-year"></span>
+        <!--Fixa så att året uppdateras automatiskt genom js-->
+      </span>
+      <span class="text"
+        >Created for
+        <a
+          class="text"
+          href="https://www.su.se/sok-kurser-och-program/ib917n-1.413326"
+          target="_blank"
+          >WPROG</a
+        >
+        at Stockholms University.
+      </span>
+    </footer>
   </body>
 </html>

@@ -53,21 +53,25 @@ export function updateTextColor(textParams, bgHexInput, originalHex) {
   });
   hexInput.value = originalHex;
 
+  const article = document.querySelector(".contrast-example");
+  if (article) {
+    article.style.borderColor = hexColor;
+  }
+
   updateButtonStyles(hexInput.value, bgHexInput.value);
   updateSlideThumbsColor(hexColor);
 }
 
 export function adjustTextColor(
-  colorsSection,
+  contrastRatio,
+  content,
   backgroundLightness,
-  textElements,
-  updateButtonStyles,
-  updateSlideThumbsColor,
-  updateContrastCheckTextColor
+  textElements
 ) {
-  const textColor = backgroundLightness <= 0.5 ? "#FFF" : "#000";
-  const bgColor = backgroundLightness > 0.5 ? "#FFF" : "#000";
-  colorsSection.style.color = textColor;
+  const textColor =
+    backgroundLightness <= contrastRatio / 100 ? "#FFF" : "#000";
+  const bgColor = backgroundLightness >= contrastRatio / 100 ? "#FFF" : "#000";
+  content.style.color = textColor;
 
   textElements.forEach((element) => {
     if (element) {
@@ -75,12 +79,17 @@ export function adjustTextColor(
     }
   });
 
+  const article = document.querySelector(".contrast-example");
+  if (article) {
+    article.style.borderColor = textColor;
+  }
+
   updateButtonStyles(textColor, bgColor);
   updateSlideThumbsColor(textColor);
   updateContrastCheckTextColor(backgroundLightness);
 }
 
-export function updateButtonStyles(textColor, bgColor) {
+function updateButtonStyles(textColor, bgColor) {
   const buttons = document.querySelectorAll(".button.text");
   buttons.forEach((button) => {
     button.style.color = bgColor;
@@ -88,24 +97,56 @@ export function updateButtonStyles(textColor, bgColor) {
   });
 }
 
-export function updateSlideThumbsColor(thumbColor) {
+function updateSlideThumbsColor(thumbColor) {
   const sliders = document.querySelectorAll(".slider");
   sliders.forEach((slider) => {
     slider.style.setProperty("--thumb-color", thumbColor);
   });
 }
 
-export function updateSliderColor(lightness) {
+function updateSliderColor(lightness) {
   const sliderBorderColor =
-    lightness > 0.5 ? "hsla(0, 0%, 0%, 0.4)" : "hsla(0, 0%, 100%, 0.4)";
+    lightness >= 0.35 ? "hsla(0, 0%, 0%, 0.4)" : "hsla(0, 0%, 100%, 0.4)";
   const sliders = document.querySelectorAll(".slider");
   sliders.forEach((slider) => {
     slider.style.setProperty("--slider-border-color", sliderBorderColor);
   });
 }
 
-export function updateContrastCheckTextColor(bgColor) {
+function updateContrastCheckTextColor(bgColor) {
   const contrastCheckDisplay = document.querySelector("#contrast-check");
-  const textColor = bgColor <= 0.5 ? "#fff" : "#000";
+  const textColor = bgColor <= 0.35 ? "#fff" : "#000";
   contrastCheckDisplay.style.color = textColor;
+}
+
+export function getYear() {
+  const year = new Date().getFullYear();
+  return year;
+}
+
+export function getTodaysDate() {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const today = new Date();
+  const day = adjustDate(today.getDate());
+  const monthIndex = today.getMonth();
+  const year = getYear();
+  const todaysDate = `${day} ${monthNames[monthIndex]} ${year}`;
+  return todaysDate;
+}
+
+function adjustDate(day) {
+  return day.toString().padStart(2, "0");
 }
