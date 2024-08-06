@@ -96,3 +96,16 @@ export function handleSliderEnd(textParams, bgParams, debounceUpdateContrast) {
   changeOriginalHexValues(textParams, bgParams);
   handleSliderChange(textParams, bgParams, debounceUpdateContrast);
 }
+
+export function checkSelectedRadio() {
+  const radioGroup = document.querySelector(".radio-group");
+  const radios = radioGroup.querySelectorAll('input[type="radio"]');
+
+  let selectedValue = null;
+  radios.forEach((radio) => {
+    if (radio.checked) {
+      selectedValue = radio.value;
+    }
+  });
+  return selectedValue;
+}

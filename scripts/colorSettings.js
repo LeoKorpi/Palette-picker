@@ -1,35 +1,56 @@
 import { hslToHex } from "./colorConversion.js";
-import { getOriginalHexValues, setOriginalHexValues } from "./eventHandlers.js";
+import { getContrastResult } from "./contrastCheck.js";
+import {
+  getOriginalHexValues,
+  setOriginalHexValues,
+  checkSelectedRadio,
+} from "./eventHandlers.js";
 
-export function generateRandomColors(
+function setHslValues(params, hsl) {
+  params.hue.value = hsl.h;
+  params.saturation.value = hsl.s;
+  params.lightness.value = hsl.l;
+}
+
+function generateRandomHsl() {
+  return {
+    h: Math.floor(Math.random() * 360),
+    s: Math.random() * 0.8 + 0.2,
+    l: Math.random() * 0.7 + 0.3,
+  };
+}
+
+export async function generateRandomColors(
   textParams,
   bgParams,
   debounceUpdateContrast
 ) {
-  const randomHue = () => Math.floor(Math.random() * 360);
-  const randomSaturation = () => Math.random();
-  const randomLightness = () => Math.random();
+  let contrastRatio = 0;
+  const minimumThreshold = checkSelectedRadio();
+  const maxAttempts = 100;
+  let attempts = 0;
 
-  // Generera slumpmässiga HSL-värden
-  const textHsl = {
-    h: randomHue(),
-    s: randomSaturation(),
-    l: randomLightness(),
-  };
+  let textHsl, bgHsl;
 
-  const bgHsl = {
-    h: randomHue(),
-    s: randomSaturation(),
-    l: randomLightness(),
-  };
+  do {
+    attempts++;
 
-  textParams.hue.value = textHsl.h;
-  textParams.saturation.value = textHsl.s;
-  textParams.lightness.value = textHsl.l;
+    // Generera slumpmässiga HSL-värden
+    textHsl = generateRandomHsl();
+    bgHsl = generateRandomHsl();
 
-  bgParams.hue.value = bgHsl.h;
-  bgParams.saturation.value = bgHsl.s;
-  bgParams.lightness.value = bgHsl.l;
+    setHslValues(textParams, textHsl);
+    setHslValues(bgParams, bgHsl);
+
+    contrastRatio = await getContrastResult(textParams, bgParams);
+    if (attempts >= maxAttempts) {
+      console.warn("Max attempts reached. Using the best found combination.");
+      break;
+    }
+  } while (contrastRatio <= minimumThreshold);
+
+  setHslValues(textParams, textHsl);
+  setHslValues(bgParams, bgHsl);
 
   changeOriginalHexValues(textParams, bgParams);
   debounceUpdateContrast();
@@ -40,13 +61,17 @@ export function switchColors(textParams, bgParams, debounceUpdateContrast) {
   const tempSat = textParams.saturation.value;
   const tempLight = textParams.lightness.value;
 
-  textParams.hue.value = bgParams.hue.value;
-  textParams.saturation.value = bgParams.saturation.value;
-  textParams.lightness.value = bgParams.lightness.value;
+  setHslValues(textParams, {
+    h: bgParams.hue.value,
+    s: bgParams.saturation.value,
+    l: bgParams.lightness.value,
+  });
 
-  bgParams.hue.value = tempHue;
-  bgParams.saturation.value = tempSat;
-  bgParams.lightness.value = tempLight;
+  setHslValues(bgParams, {
+    h: tempHue,
+    s: tempSat,
+    l: tempLight,
+  });
 
   changeOriginalHexValues(textParams, bgParams);
   debounceUpdateContrast();
