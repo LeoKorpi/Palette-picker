@@ -16,7 +16,6 @@
 
 body {
   min-height: 100dvh;
-  width: 100dvw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,7 +41,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 4rem;
 }
 
 h1 {
@@ -59,10 +58,6 @@ h3 {
 
 h4 {
   font-size: var(--font-size-heading-4);
-}
-
-p {
-  margin-bottom: 2em;
 }
 
 .heading {
@@ -133,6 +128,7 @@ p {
 .contrast-example h4,
 .contrast-example p,
 .colors-header,
+.threshold-header,
 .input-field,
 .label,
 .button {
@@ -141,7 +137,7 @@ p {
 
 .contrast-example-heading {
   line-height: normal;
-  margin-bottom: 0.625rem;
+  margin-bottom: 0.75rem;
 }
 
 .contrast-example-heading h3 {
@@ -159,7 +155,7 @@ p {
 
 .colors-header,
 .input-field {
-  font-size: var(--font-size-heading-4);
+  font-size: var(--font-size-heading-3);
 }
 
 .colors-text,
@@ -201,14 +197,7 @@ p {
   display: flex;
   flex-direction: column;
   width: 100%;
-}
-
-.label {
-  width: auto;
-}
-
-.hsl-label {
-  font-size: var(--font-size-paragraph);
+  gap: 0.5rem;
 }
 
 .slider {
@@ -302,19 +291,56 @@ p {
 }
 
 .threshold {
-  /* Lägg till någon fyndig styling här*/
-  padding: 2rem;
+  padding: 2rem 2rem 0 2rem;
+  border: none;
+  display: inline-block;
+}
+
+.threshold-header {
+  font-size: var(--font-size-heading-3);
+  font-weight: 600;
+  text-align: center;
 }
 
 .radio-group {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.input-and-label {
+  display: inline-block;
+}
+
+.threshold-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #8b0052;
+  letter-spacing: normal;
+  background-color: #f7f7f7;
+  color: #8b0052;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  min-width: 3rem;
+  text-align: center;
+}
+
+input[type="radio"]:checked + .label {
+  background-color: #8b0052;
+  color: #fff;
 }
 
 .buttons {
   width: 100%;
-  margin-bottom: 2rem;
 }
 
 .button-group {

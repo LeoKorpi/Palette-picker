@@ -44,7 +44,9 @@ export async function generateRandomColors(
 
     contrastRatio = await getContrastResult(textParams, bgParams);
     if (attempts >= maxAttempts) {
-      console.warn("Max attempts reached. Using the best found combination.");
+      console.warn(
+        "Max attempts reached. Using the latest generated combination."
+      );
       break;
     }
   } while (contrastRatio <= minimumThreshold);

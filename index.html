@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ändra titeln och kom på ett nytt namn</title>
+    <title>How's the contrast?</title>
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
@@ -28,6 +28,7 @@
       <section class="contrast-info">
         <h2 class="contrast-heading heading text" id="contrast-heading">
           <!-- Fylls i med js -->
+          Please allow javascript in your browser.
         </h2>
         <div class="contrast-ratio-and-results">
           <h3 class="heading text">
@@ -51,6 +52,7 @@
             <h3 class="heading text">A subtitle for the article</h3>
             <h4 class="heading text" id="today-date">
               <!-- Fylls i med js -->
+              Please allow javascript in your browser.
             </h4>
           </div>
           <p class="paragraph small-text text">
@@ -85,14 +87,9 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label for="text-hue" class="hsl-label paragraph small-text text"
-                >Hue:
-              </label>
-              <span class="hsl-label paragraph small-text text"
-                ><span
-                  class="hsl-label paragraph small-text text"
-                  id="text-hue-value"
-                ></span
+              <label for="text-hue" class="small-text text">Hue: </label>
+              <span class="small-text text"
+                ><span class="small-text text" id="text-hue-value"></span
                 >°</span
               >
             </div>
@@ -107,16 +104,11 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label
-                for="text-saturation"
-                class="hsl-label paragraph small-text text"
+              <label for="text-saturation" class="small-text text"
                 >Saturation:
               </label>
-              <span class="hsl-label paragraph small-text text">
-                <span
-                  class="hsl-label paragraph small-text text"
-                  id="text-saturation-value"
-                ></span>
+              <span class="small-text text">
+                <span class="small-text text" id="text-saturation-value"></span>
               </span>
             </div>
             <input
@@ -131,16 +123,11 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label
-                for="text-lightness"
-                class="hsl-label paragraph small-text text"
+              <label for="text-lightness" class="input-valueh small-text text"
                 >Lightness:
               </label>
-              <span class="hsl-label paragraph small-text text">
-                <span
-                  class="hsl-label paragraph small-text text"
-                  id="text-lightness-value"
-                ></span>
+              <span class="small-text text">
+                <span class="small-text text" id="text-lightness-value"></span>
               </span>
             </div>
             <input
@@ -173,12 +160,8 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label
-                for="background-hue"
-                class="hsl-label paragraph small-text text"
-                >Hue:
-              </label>
-              <span class="hsl-label paragraph small-text text"
+              <label for="background-hue" class="small-text text">Hue: </label>
+              <span class="small-text text"
                 ><span class="hsl-label" id="background-hue-value"></span
                 >°</span
               >
@@ -194,12 +177,10 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label
-                for="background-saturation"
-                class="hsl-label paragraph small-text text"
+              <label for="background-saturation" class="small-text text"
                 >Saturation:
               </label>
-              <span class="hsl-label paragraph small-text text"
+              <span class="small-text text"
                 ><span class="hsl-label" id="background-saturation-value"></span
               ></span>
             </div>
@@ -215,12 +196,10 @@
           </div>
           <div class="colors-range">
             <div class="label">
-              <label
-                for="background-lightness"
-                class="hsl-label paragraph small-text text"
+              <label for="background-lightness" class="small-text text"
                 >Lightness:
               </label>
-              <span class="hsl-label paragraph small-text text"
+              <span class="small-text text"
                 ><span class="hsl-label" id="background-lightness-value"></span
               ></span>
             </div>
@@ -238,7 +217,7 @@
       </section>
 
       <fieldset class="threshold">
-        <legend>Select minimum threshold:</legend>
+        <legend class="threshold-header text">Select minimum threshold:</legend>
         <div class="radio-group">
           <div class="input-and-label">
             <input
@@ -248,7 +227,11 @@
               value="1"
               checked
             />
-            <label for="threshold-one">1</label>
+            <label
+              class="label threshold-label small-text text"
+              for="threshold-one"
+              >1</label
+            >
           </div>
           <div class="input-and-label">
             <input
@@ -257,7 +240,11 @@
               id="threshold-three"
               value="3"
             />
-            <label for="threshold-three">3</label>
+            <label
+              class="label threshold-label small-text text"
+              for="threshold-three"
+              >3</label
+            >
           </div>
           <div class="input-and-label">
             <input
@@ -266,7 +253,11 @@
               id="threshold-four-point-five"
               value="4.5"
             />
-            <label for="threshold-four-point-five">4.5</label>
+            <label
+              class="label threshold-label small-text text"
+              for="threshold-four-point-five"
+              >4.5</label
+            >
           </div>
           <div class="input-and-label">
             <input
@@ -275,7 +266,11 @@
               id="threshold-seven"
               value="7"
             />
-            <label for="threshold-seven">7</label>
+            <label
+              class="label threshold-label small-text text"
+              for="threshold-seven"
+              >7</label
+            >
           </div>
         </div>
       </fieldset>
@@ -323,7 +318,7 @@
           the digital age.
         </p>
       </section>
-      <section>
+      <div>
         <blockquote>
           <p class="text">
             "Color! What a deep and mysterious language, the language of
@@ -332,7 +327,7 @@
             - Paul Gauguin
           </p>
         </blockquote>
-      </section>
+      </div>
     </main>
     <footer>
       <span class="text"

@@ -39,7 +39,7 @@ const bgParams = {
   lightnessValue: document.querySelector("#background-lightness-value"),
 };
 
-const content = document.querySelector("main");
+const content = document.querySelector("body");
 const textElements = content.querySelectorAll(".text");
 const smallTextElements = content.querySelectorAll(".small-text");
 
@@ -109,23 +109,23 @@ bgParams.hue.addEventListener("change", handleSliderEndEvent);
 bgParams.saturation.addEventListener("change", handleSliderEndEvent);
 bgParams.lightness.addEventListener("change", handleSliderEndEvent);
 
-const rndButton = document.querySelector("#button-random");
-rndButton.addEventListener("click", () => {
-  generateRandomColors(textParams, bgParams, debounceUpdateContrast);
-});
-
-const revButton = document.querySelector("#button-reverse");
-revButton.addEventListener("click", () => {
-  switchColors(textParams, bgParams, debounceUpdateContrast);
-});
-
-const currentYear = document.querySelector("#current-year");
-currentYear.textContent = getYear();
-
-const todaysDate = document.querySelector("#today-date");
-todaysDate.textContent = getTodaysDate();
-
 function start() {
+  const rndButton = document.querySelector("#button-random");
+  rndButton.addEventListener("click", () => {
+    generateRandomColors(textParams, bgParams, debounceUpdateContrast);
+  });
+
+  const revButton = document.querySelector("#button-reverse");
+  revButton.addEventListener("click", () => {
+    switchColors(textParams, bgParams, debounceUpdateContrast);
+  });
+
+  const currentYear = document.querySelector("#current-year");
+  currentYear.textContent = getYear();
+
+  const todaysDate = document.querySelector("#today-date");
+  todaysDate.textContent = getTodaysDate();
+
   generateRandomColors(textParams, bgParams, debounceUpdateContrast);
   debounceUpdateContrast();
 }
