@@ -58,20 +58,21 @@ export function updateTextColor(textParams, bgHexInput, originalHex) {
     article.style.borderColor = hexColor;
   }
 
+  updateRadioStyles(hexColor, bgHexInput.value);
   updateButtonStyles(hexInput.value, bgHexInput.value);
   updateSlideThumbsColor(hexColor);
 }
 
-export function adjustTextColor(
-  contrastRatio,
-  content,
-  backgroundLightness,
-  textElements
-) {
-  const textColor =
-    backgroundLightness <= contrastRatio / 100 ? "#FFF" : "#000";
-  const bgColor = backgroundLightness >= contrastRatio / 100 ? "#FFF" : "#000";
-  content.style.color = textColor;
+export function adjustTextColor(contrastRatio, textElements, bgParams) {
+  const bgHexColor = hslToHex(
+    bgParams.hue.value,
+    bgParams.saturation.value * 100,
+    bgParams.lightness.value * 100
+  );
+
+  const backgroundLightness = bgParams.lightness.value * 100;
+
+  let textColor = compareTextToBackground(backgroundLightness, contrastRatio);
 
   textElements.forEach((element) => {
     if (element) {
@@ -84,9 +85,43 @@ export function adjustTextColor(
     article.style.borderColor = textColor;
   }
 
-  updateButtonStyles(textColor, bgColor);
+  updateRadioStyles(textColor, bgHexColor);
+  updateButtonStyles(textColor, bgHexColor);
   updateSlideThumbsColor(textColor);
-  updateContrastCheckTextColor(backgroundLightness);
+  updateContrastCheckTextColor(bgHexColor);
+}
+
+function compareTextToBackground(backgroundLightness, contrastRatio) {
+  if (backgroundLightness > 50) return "#000";
+  if (backgroundLightness < 35 || contrastRatio < 4.5) return "#fff";
+  return "#000";
+}
+
+function updateRadioStyles(textColor, backgroundColor) {
+  console.log(`TextHex: ${textColor} bgHex: ${backgroundColor}`);
+
+  /**
+   * Just nu kallas funktionen på från flera ställen vilket ställer till det
+   * jag vill kalla på funktionen för att uppdatera färgen på knapparna
+   * kan man kanske bryta ut funktionen? den borde bara kallas på inuti uiUpdates
+   *
+   * kanske vore bra att göra som alla sliders, eventListenern bara lyssnar efter input
+   * sen kallar de på en ny funktion som i sin tur tittar efter adjust/updateTextColor
+   * eftersom att de funktionerna redan ändrar om färger på text-element när det behövs
+   */
+
+  const radios = document.querySelectorAll('input[type="radio"]');
+  radios.forEach((radio) => {
+    const label = radio.nextElementSibling;
+    if (radio.checked) {
+      label.style.backgroundColor = textColor;
+      label.style.color = backgroundColor;
+    } else {
+      label.style.backgroundColor = "transparent";
+      label.style.color = textColor;
+    }
+    label.style.borderColor = textColor;
+  });
 }
 
 function updateButtonStyles(textColor, bgColor) {

@@ -42,6 +42,7 @@ const bgParams = {
 const content = document.querySelector("body");
 const textElements = content.querySelectorAll(".text");
 const smallTextElements = content.querySelectorAll(".small-text");
+let contrastRatio;
 
 function updateColors() {
   const originalHexValues = getOriginalHexValues();
@@ -50,28 +51,18 @@ function updateColors() {
 }
 
 const debounceUpdateContrast = debounce(async () => {
-  const contrastRatio = await getContrastResult(textParams, bgParams);
+  contrastRatio = await getContrastResult(textParams, bgParams);
   const contrastResult = displayContrastCheck(contrastRatio);
   const contrastHeading = displayContrastHeading(contrastRatio);
 
   updateColors();
 
   if (contrastResult === "WCAG AA") {
-    adjustTextColor(
-      contrastRatio,
-      content,
-      bgParams.lightness.value,
-      smallTextElements
-    );
+    adjustTextColor(contrastRatio, smallTextElements, bgParams);
   }
 
   if (contrastResult === "Fail") {
-    adjustTextColor(
-      contrastRatio,
-      content,
-      bgParams.lightness.value,
-      textElements
-    );
+    adjustTextColor(contrastRatio, textElements, bgParams);
   }
 
   document.querySelector("#contrast-heading").textContent = contrastHeading;
@@ -109,6 +100,15 @@ bgParams.hue.addEventListener("change", handleSliderEndEvent);
 bgParams.saturation.addEventListener("change", handleSliderEndEvent);
 bgParams.lightness.addEventListener("change", handleSliderEndEvent);
 
+function attachRadioListeners() {
+  const radios = document.querySelectorAll('input[type="radio"]');
+  radios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      debounceUpdateContrast();
+    });
+  });
+}
+
 function start() {
   const rndButton = document.querySelector("#button-random");
   rndButton.addEventListener("click", () => {
@@ -128,6 +128,7 @@ function start() {
 
   generateRandomColors(textParams, bgParams, debounceUpdateContrast);
   debounceUpdateContrast();
+  attachRadioListeners();
 }
 
 document.addEventListener("DOMContentLoaded", () => {

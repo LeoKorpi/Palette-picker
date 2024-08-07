@@ -6,6 +6,8 @@
   --font-size-paragraph: 1rem;
   --font-family-serif: "Domine", "Georgia";
   --font-family-sans: "Work Sans", "Montserrat", "Arial";
+  --text-color-default: #000;
+  --background-color-default: #fff;
 }
 
 * {
@@ -42,6 +44,7 @@ main {
   justify-content: center;
   align-items: center;
   gap: 4rem;
+  margin-bottom: 2rem;
 }
 
 h1 {
@@ -224,7 +227,7 @@ h4 {
   cursor: pointer;
   height: 1.5rem;
   width: 1.5rem;
-  background-color: var(--thumb-color, white);
+  background-color: var(--thumb-color, var(--background-color-default));
   border-radius: 50%;
   margin-top: -0.75rem; /* För att centrera bollen på linjen*/
 }
@@ -247,7 +250,7 @@ h4 {
   cursor: pointer;
   height: 1.5rem;
   width: 1.5rem;
-  background-color: var(--thumb-color, white);
+  background-color: var(--thumb-color, var(--background-color-default));
   border-radius: 50%;
 }
 
@@ -281,7 +284,7 @@ h4 {
   cursor: pointer;
   height: 1.5rem;
   width: 1.5rem;
-  background-color: var(--thumb-color, white);
+  background-color: var(--thumb-color, var(--background-color-default));
   border-radius: 50%;
 }
 
@@ -322,11 +325,10 @@ input[type="radio"] {
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
+  border: 2px solid currentColor;
   border-radius: 0.5rem;
-  border: 2px solid #8b0052;
+  background-color: transparent;
   letter-spacing: normal;
-  background-color: #f7f7f7;
-  color: #8b0052;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
@@ -334,9 +336,10 @@ input[type="radio"] {
   text-align: center;
 }
 
-input[type="radio"]:checked + .label {
-  background-color: #8b0052;
-  color: #fff;
+input[type="radio"]:checked + .threshold-label {
+  background-color: var(--text-color-default);
+  border-color: var(--background-color-default);
+  color: var(--background-color-default);
 }
 
 .buttons {
