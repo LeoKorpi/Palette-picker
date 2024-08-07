@@ -20,6 +20,21 @@ function generateRandomHsl() {
   };
 }
 
+function generateContrastingHsl(refLightness) {
+  let lightnessDiff = Math.random() * 0.5 + 0.5;
+  let newLightness = refLightness + lightnessDiff;
+
+  if (newLightness > 1) {
+    newLightness = refLightness - lightnessDiff;
+  }
+
+  return {
+    h: Math.floor(Math.random() * 360),
+    s: Math.random() * 0.8 + 0.2,
+    l: newLightness,
+  };
+}
+
 export async function generateRandomColors(
   textParams,
   bgParams,
@@ -37,12 +52,13 @@ export async function generateRandomColors(
 
     // Generera slumpmässiga HSL-värden
     textHsl = generateRandomHsl();
-    bgHsl = generateRandomHsl();
+    bgHsl = generateContrastingHsl(textHsl.l);
 
     setHslValues(textParams, textHsl);
     setHslValues(bgParams, bgHsl);
 
     contrastRatio = await getContrastResult(textParams, bgParams);
+
     if (attempts >= maxAttempts) {
       console.warn(
         "Max attempts reached. Using the latest generated combination."
