@@ -1,6 +1,6 @@
 :root {
   --font-size-header: 4rem;
-  --font-size-heading-2: 2.5rem;
+  --font-size-heading-2: 2.375rem;
   --font-size-heading-3: 1.5rem;
   --font-size-heading-4: 1.125rem;
   --font-size-paragraph: 1rem;
@@ -38,12 +38,15 @@ header {
   margin-top: 3rem;
 }
 
-main {
+.main-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 4rem;
+  gap: 2.5rem;
+}
+
+main {
+  display: flex;
   margin-bottom: 2rem;
 }
 
@@ -86,7 +89,7 @@ h4 {
   justify-content: flex-start;
   align-items: baseline;
   flex-wrap: wrap;
-  max-width: 740px;
+  /* max-width: 740px; */
   margin-bottom: 1rem;
   letter-spacing: normal;
 }
@@ -153,7 +156,7 @@ h4 {
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  gap: 3rem;
+  gap: 2.5rem;
 }
 
 .colors-header,
@@ -166,8 +169,8 @@ h4 {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 440px;
-  gap: 1rem;
+  max-width: 480px;
+  gap: 0.625rem;
 }
 
 .colors-input {
@@ -177,7 +180,7 @@ h4 {
   align-items: baseline;
   padding-bottom: 0.25rem;
   height: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .input-field {
@@ -200,7 +203,7 @@ h4 {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 .slider {
@@ -293,10 +296,21 @@ h4 {
   width: 2rem;
 }
 
+.color-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 550px;
+  margin-bottom: 1rem;
+}
+
 .threshold {
-  padding: 2rem 2rem 0 2rem;
+  /* padding: 2rem 2rem 0 2rem; */
+  padding: 2rem;
   border: none;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .threshold-header {
@@ -308,8 +322,9 @@ h4 {
 .radio-group {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 input[type="radio"] {
@@ -367,10 +382,6 @@ input[type="radio"]:checked + .threshold-label {
   min-width: 8rem;
 }
 
-.wcag-info {
-  max-width: 740px;
-}
-
 /*Fixa styling för att göra texten i footers och citat-sektionen större*/
 
 footer {
@@ -383,19 +394,72 @@ footer {
 }
 
 @media only screen and (min-width: 64em) {
-  .header-text {
-    font-size: 5rem;
+  .main-container {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-template-rows: repeat(11, auto);
+    justify-items: center;
+    row-gap: 3rem;
+    column-gap: 2rem;
+    padding: 0 2rem;
+    max-width: 90em;
+  }
+
+  main {
+    display: grid;
+    justify-items: center;
+    width: 100%;
+  }
+
+  .contrast-info {
+    grid-column: 8 / 16;
+    grid-row: 1 / 5;
   }
 
   .colors {
-    gap: 5rem;
+    grid-column: 1 / 8;
+    grid-row: 1 / 4;
   }
 
-  .buttons {
-    width: 40%;
+  .color-settings {
+    grid-column: 1 / 8;
+    grid-row: 4 / 5;
+  }
+
+  .wcag-info {
+    grid-column: 4 / 14;
+    grid-row: 5 / 11;
+    /* max-width: 750px; */
+  }
+
+  .quote {
+    grid-column: 5/13;
+    grid-row: 11/12;
+  }
+
+  .header-text {
+    font-size: 5rem;
+    margin-bottom: 3rem;
   }
 
   .input-field {
     width: 40%;
+  }
+
+  .colors-range {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .slider {
+    max-width: 60%;
+  }
+
+  .threshold {
+    max-width: 520px;
+  }
+
+  .radio-group {
+    width: 80%;
   }
 }
