@@ -75,7 +75,13 @@ export function adjustTextColor(contrastRatio, textElements, bgParams) {
   let textColor = compareTextToBackground(backgroundLightness, contrastRatio);
 
   textElements.forEach((element) => {
-    if (element) {
+    const forContrastExample = element.closest(".contrast-example") !== null;
+    let textColor = compareTextToBackground(
+      backgroundLightness,
+      contrastRatio,
+      forContrastExample
+    );
+    if (textColor) {
       element.style.color = textColor;
     }
   });
@@ -88,28 +94,21 @@ export function adjustTextColor(contrastRatio, textElements, bgParams) {
   updateRadioStyles(textColor, bgHexColor);
   updateButtonStyles(textColor, bgHexColor);
   updateSlideThumbsColor(textColor);
-  updateContrastCheckTextColor(bgHexColor);
+  updateContrastCheckTextColor(textColor);
 }
 
-function compareTextToBackground(backgroundLightness, contrastRatio) {
+function compareTextToBackground(
+  backgroundLightness,
+  contrastRatio,
+  forContrastExample = false
+) {
+  if (forContrastExample) return null;
   if (backgroundLightness > 50) return "#000";
   if (backgroundLightness < 35 || contrastRatio < 4.5) return "#fff";
   return "#000";
 }
 
 function updateRadioStyles(textColor, backgroundColor) {
-  console.log(`TextHex: ${textColor} bgHex: ${backgroundColor}`);
-
-  /**
-   * Just nu kallas funktionen på från flera ställen vilket ställer till det
-   * jag vill kalla på funktionen för att uppdatera färgen på knapparna
-   * kan man kanske bryta ut funktionen? den borde bara kallas på inuti uiUpdates
-   *
-   * kanske vore bra att göra som alla sliders, eventListenern bara lyssnar efter input
-   * sen kallar de på en ny funktion som i sin tur tittar efter adjust/updateTextColor
-   * eftersom att de funktionerna redan ändrar om färger på text-element när det behövs
-   */
-
   const radios = document.querySelectorAll('input[type="radio"]');
   radios.forEach((radio) => {
     const label = radio.nextElementSibling;
@@ -148,9 +147,8 @@ function updateSliderColor(lightness) {
   });
 }
 
-function updateContrastCheckTextColor(bgColor) {
+function updateContrastCheckTextColor(textColor) {
   const contrastCheckDisplay = document.querySelector("#contrast-check");
-  const textColor = bgColor <= 0.35 ? "#fff" : "#000";
   contrastCheckDisplay.style.color = textColor;
 }
 

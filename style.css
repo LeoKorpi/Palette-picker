@@ -382,7 +382,11 @@ input[type="radio"]:checked + .threshold-label {
   min-width: 8rem;
 }
 
-/*Fixa styling för att göra texten i footers och citat-sektionen större*/
+.quote {
+  font-size: 1.25rem;
+  word-spacing: 2px;
+  font-style: italic;
+}
 
 footer {
   display: flex;
@@ -400,7 +404,7 @@ footer {
     grid-template-rows: repeat(11, auto);
     justify-items: center;
     row-gap: 3rem;
-    column-gap: 2rem;
+    column-gap: 4rem;
     padding: 0 2rem;
     max-width: 90em;
   }
@@ -439,7 +443,7 @@ footer {
 
   .header-text {
     font-size: 5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem;
   }
 
   .input-field {
