@@ -1,3 +1,4 @@
+// Översätter HEX till RGB
 export function hexToRgb(hex) {
   hex = expandHex(hex); // se till att hexvärdet är 6 siffror långt
   let r = parseInt(hex.slice(1, 3), 16);
@@ -6,22 +7,20 @@ export function hexToRgb(hex) {
   return { r, g, b };
 }
 
+// Översätter HEX till HSL
 export function hexToHsl(hex) {
   // Konvertera först till RGB
   const { r, g, b } = hexToRgb(hex);
-  console.log(`RGB: ${r}, ${g}, ${b}`);
 
   // Normalisera värderna mellan [0,1]
   let rNorm = r / 255;
   let gNorm = g / 255;
   let bNorm = b / 255;
-  console.log(`Normalized RGB: ${rNorm}, ${gNorm}, ${bNorm}`);
 
   // Hitta min och max-värderna för att få ut ljusheten
   const cmin = Math.min(rNorm, gNorm, bNorm);
   const cmax = Math.max(rNorm, gNorm, bNorm);
   const delta = cmax - cmin;
-  console.log(`cmin: ${cmin}, cmax: ${cmax}, delta: ${delta}`);
 
   // Initialisera H, S & L-värdena
   let h = 0;
@@ -45,11 +44,11 @@ export function hexToHsl(hex) {
   // Avrunda L med 2 decimalers precision
   s = +(s * 100).toFixed(1);
   l = +(l * 100).toFixed(1);
-  console.log(`HSL: ${h}, ${s}, ${l}`);
 
   return { h, s, l };
 }
 
+// Översätter HSL till HEX
 export function hslToHex(h, s, l) {
   // Normalisera värderna som kommer in
   l /= 100;
@@ -65,11 +64,20 @@ export function hslToHex(h, s, l) {
   return `#${f(0)}${f(8)}${f(4)}`;
 }
 
+/*
+ * Godkänner emdast numeriska värden mellan 0-9
+ * och bokstäver mellan A-f
+ */
 export function isValidHex(hex) {
   const hexPattern = /^#([0-9A-Fa-f]{3}){1,2}$/;
   return hexPattern.test(hex);
 }
 
+/**
+ * "Förlänger" ett hexvärde från 3 till 6st tecken
+ * genom att lägga till ett likadant tecken efter
+ * det ursprungliga tecknets position
+ */
 export function expandHex(hex) {
   if (hex.length === 4) {
     return `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`;

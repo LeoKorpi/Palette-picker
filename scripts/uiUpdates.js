@@ -1,5 +1,10 @@
 import { hslToHex } from "./colorConversion.js";
 
+/**
+ * Uppdaterar bakgrundsfärgen genom att hämta värdena på alla sliders
+ * för bakgrundsfärg, konvertera de till hex och ändra bakgrundens
+ * styling till den färgen
+ */
 export function updateBackgroundColor(bgParams, originalHex) {
   const {
     hue,
@@ -27,6 +32,13 @@ export function updateBackgroundColor(bgParams, originalHex) {
   updateSliderColor(lightness.value);
 }
 
+/**
+ * Uppdaterar textfärgen genom att hämta värdena på alla sliders
+ * för textfärg, konvertera de till hex och ändra alla element med html-klassen
+ * "text" styling till den färgen.
+ * Artiklen med klassen "contrast-example" färgas också om för att
+ * dess kant ska få samma färg som texten
+ */
 export function updateTextColor(textParams, bgHexInput, originalHex) {
   const {
     hue,
@@ -58,11 +70,15 @@ export function updateTextColor(textParams, bgHexInput, originalHex) {
     article.style.borderColor = hexColor;
   }
 
-  updateRadioStyles(hexColor, bgHexInput.value);
-  updateButtonStyles(hexInput.value, bgHexInput.value);
+  updateRadioColor(hexColor, bgHexInput.value);
+  updateButtonColor(hexInput.value, bgHexInput.value);
   updateSlideThumbsColor(hexColor);
 }
 
+/**
+ * Om kontrast-förhållandet är för lågt färgar funktion om text-element till
+ * antingen svart eller vit, beroende på hur ljus bakgrunden är
+ */
 export function adjustTextColor(contrastRatio, textElements, bgParams) {
   const bgHexColor = hslToHex(
     bgParams.hue.value,
@@ -91,12 +107,15 @@ export function adjustTextColor(contrastRatio, textElements, bgParams) {
     article.style.borderColor = textColor;
   }
 
-  updateRadioStyles(textColor, bgHexColor);
-  updateButtonStyles(textColor, bgHexColor);
+  updateRadioColor(textColor, bgHexColor);
+  updateButtonColor(textColor, bgHexColor);
   updateSlideThumbsColor(textColor);
-  updateContrastCheckTextColor(textColor);
 }
 
+/**
+ * Kontrollerar bakgrundens ljus-värde och kontrastförhållandet
+ * för att veta om texten ska färgas om till vitt eller svart
+ */
 function compareTextToBackground(
   backgroundLightness,
   contrastRatio,
@@ -108,7 +127,8 @@ function compareTextToBackground(
   return "#000";
 }
 
-function updateRadioStyles(textColor, backgroundColor) {
+// Ändrar färgen på radio-knapparna
+function updateRadioColor(textColor, backgroundColor) {
   const radios = document.querySelectorAll('input[type="radio"]');
   radios.forEach((radio) => {
     const label = radio.nextElementSibling;
@@ -123,7 +143,8 @@ function updateRadioStyles(textColor, backgroundColor) {
   });
 }
 
-function updateButtonStyles(textColor, bgColor) {
+// Ändrar färgen på random & reverse-knapparna
+function updateButtonColor(textColor, bgColor) {
   const buttons = document.querySelectorAll(".button.text");
   buttons.forEach((button) => {
     button.style.color = bgColor;
@@ -131,6 +152,7 @@ function updateButtonStyles(textColor, bgColor) {
   });
 }
 
+// Ändrar färgen på cirklarna i alla sliders
 function updateSlideThumbsColor(thumbColor) {
   const sliders = document.querySelectorAll(".slider");
   sliders.forEach((slider) => {
@@ -138,6 +160,7 @@ function updateSlideThumbsColor(thumbColor) {
   });
 }
 
+// Ändrar färgen på alla sliders
 function updateSliderColor(lightness) {
   const sliderBorderColor =
     lightness >= 0.35 ? "hsla(0, 0%, 0%, 0.4)" : "hsla(0, 0%, 100%, 0.4)";
@@ -147,16 +170,13 @@ function updateSliderColor(lightness) {
   });
 }
 
-function updateContrastCheckTextColor(textColor) {
-  const contrastCheckDisplay = document.querySelector("#contrast-check");
-  contrastCheckDisplay.style.color = textColor;
-}
-
+// Returnerar vilket år det är
 export function getYear() {
   const year = new Date().getFullYear();
   return year;
 }
 
+// Returnerar dagens datum
 export function getTodaysDate() {
   const monthNames = [
     "January",
@@ -180,6 +200,7 @@ export function getTodaysDate() {
   return todaysDate;
 }
 
+// Om dagens datum (skrivet i siffror) inte är tvåsiffrigt läggs en nolla till
 function adjustDate(day) {
   return day.toString().padStart(2, "0");
 }

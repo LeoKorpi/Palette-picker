@@ -6,12 +6,14 @@ import {
   checkSelectedRadio,
 } from "./eventHandlers.js";
 
+// Hjälpmetod för att ändra flera HSL-värden samtidigt
 function setHslValues(params, hsl) {
   params.hue.value = hsl.h;
   params.saturation.value = hsl.s;
   params.lightness.value = hsl.l;
 }
 
+// Returnerar ett objekt med slumpmässiga HSL-värden
 function generateRandomHsl() {
   return {
     h: Math.floor(Math.random() * 360),
@@ -20,6 +22,10 @@ function generateRandomHsl() {
   };
 }
 
+/**
+ * Returnerar ett objekt med HSL-värden
+ * värdenas kontrastvärden blir högre för varje gång den kallas på i generateRandomColors
+ */
 function generateContrastingHsl(refLightness) {
   let lightnessDiff = Math.random() * 0.5 + 0.5;
   let newLightness = refLightness + lightnessDiff;
@@ -35,6 +41,14 @@ function generateContrastingHsl(refLightness) {
   };
 }
 
+/**
+ * Genererar slumpade färger för text och bakgrund
+ *
+ * Funktionen kollar efter vad det minsta önskade värdet för
+ * kontrastförhållande är och fortsätter generera tills att den
+ * kommer med en färgkombination vars kontrast är högre eller lika
+ * med den önskade
+ */
 export async function generateRandomColors(
   textParams,
   bgParams,
@@ -42,14 +56,9 @@ export async function generateRandomColors(
 ) {
   let contrastRatio = 0;
   const minimumThreshold = checkSelectedRadio();
-  const maxAttempts = 100;
-  let attempts = 0;
-
   let textHsl, bgHsl;
 
   do {
-    attempts++;
-
     // Generera slumpmässiga HSL-värden
     textHsl = generateRandomHsl();
     bgHsl = generateContrastingHsl(textHsl.l);
@@ -58,13 +67,6 @@ export async function generateRandomColors(
     setHslValues(bgParams, bgHsl);
 
     contrastRatio = await getContrastResult(textParams, bgParams);
-
-    if (attempts >= maxAttempts) {
-      console.warn(
-        "Max attempts reached. Using the latest generated combination."
-      );
-      break;
-    }
   } while (contrastRatio <= minimumThreshold);
 
   setHslValues(textParams, textHsl);
@@ -74,6 +76,7 @@ export async function generateRandomColors(
   debounceUpdateContrast();
 }
 
+// Byter plats på färgerna för text och bakgrund
 export function switchColors(textParams, bgParams, debounceUpdateContrast) {
   const tempHue = textParams.hue.value;
   const tempSat = textParams.saturation.value;
@@ -95,6 +98,7 @@ export function switchColors(textParams, bgParams, debounceUpdateContrast) {
   debounceUpdateContrast();
 }
 
+// Ändrar de ursprungliga Hex-värdena som visas i input-fälten
 export function changeOriginalHexValues(textParams, bgParams) {
   const textHex = hslToHex(
     textParams.hue.value,

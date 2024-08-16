@@ -89,7 +89,6 @@ h4 {
   justify-content: flex-start;
   align-items: baseline;
   flex-wrap: wrap;
-  /* max-width: 740px; */
   margin-bottom: 1rem;
   letter-spacing: normal;
 }
@@ -305,7 +304,6 @@ h4 {
 }
 
 .threshold {
-  /* padding: 2rem 2rem 0 2rem; */
   padding: 2rem;
   border: none;
   display: flex;
@@ -433,7 +431,6 @@ footer {
   .wcag-info {
     grid-column: 4 / 14;
     grid-row: 5 / 11;
-    /* max-width: 750px; */
   }
 
   .quote {

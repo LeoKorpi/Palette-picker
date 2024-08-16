@@ -85,7 +85,12 @@ const handleSliderEndEvent = () => {
   handleSliderEnd(textParams, bgParams, debounceUpdateContrast);
 };
 
-// Input-events avfyras inte när elements värden ändras genom js
+/**
+ * Input-events avfyras inte när elements värden ändras genom
+ * endast js-kod, tillskillnad från "change" där eventet sker
+ * när användaren släpper slidern och en förändring i inputets tidigare
+ * värde har registrerats
+ * */
 textParams.hue.addEventListener("input", handleSliderEvent);
 textParams.saturation.addEventListener("input", handleSliderEvent);
 textParams.lightness.addEventListener("input", handleSliderEvent);
@@ -109,7 +114,7 @@ function attachRadioListeners() {
   });
 }
 
-function start() {
+function attachButtonListeners() {
   const rndButton = document.querySelector("#button-random");
   rndButton.addEventListener("click", () => {
     generateRandomColors(textParams, bgParams, debounceUpdateContrast);
@@ -119,16 +124,21 @@ function start() {
   revButton.addEventListener("click", () => {
     switchColors(textParams, bgParams, debounceUpdateContrast);
   });
+}
 
+function getDates() {
   const currentYear = document.querySelector("#current-year");
   currentYear.textContent = getYear();
 
   const todaysDate = document.querySelector("#today-date");
   todaysDate.textContent = getTodaysDate();
+}
 
-  generateRandomColors(textParams, bgParams, debounceUpdateContrast);
-  debounceUpdateContrast();
+function start() {
+  attachButtonListeners();
   attachRadioListeners();
+  getDates();
+  generateRandomColors(textParams, bgParams, debounceUpdateContrast);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
